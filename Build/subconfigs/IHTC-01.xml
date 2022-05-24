@@ -1,0 +1,44 @@
+<pluginSettings>
+	<!--  Запрос на обучение  -->
+	<connection operationName="CLTM">
+		<http connectingTimeout="PT30M" method="POST">
+			<url>https://gao-dev.rnd.rtsoft.ru/train_model/</url>
+		</http>
+		<loader>
+			<resource>/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='TM1H']</resource>
+			<startDate>P-6M</startDate>
+			<endDate>P-14D</endDate>
+		</loader>
+		<processingClass>ru.rtsoft.amigo.cloud.forecaster.ForecastServicePlugin</processingClass>
+		<customConfig client_id="russian-island" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='FL24']" start="PT1H"/>
+	</connection>
+
+	<!-- Запрос на прогноз -->
+	<connection operationName="CLFC">
+		<http connectingTimeout="PT2M" method="POST">
+			<url>https://gao-dev.rnd.rtsoft.ru/forecast_model/</url>
+		</http>
+		<loader>
+			<resource>/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='TM1H']</resource>
+			<startDate>P-7D</startDate>
+			<endDate>PT-1H</endDate>
+		</loader>
+		<processingClass>ru.rtsoft.amigo.cloud.forecaster.ForecastServicePlugin</processingClass>
+		<customConfig client_id="russian-island" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='FL24']" start="PT1H"/>
+	</connection>
+
+	<!-- Запрос ошибки прогнозирования -->
+	<connection operationName="CLFE">
+		<http method="POST">
+			<url>https://gao-dev.rnd.rtsoft.ru/error_metrics/</url>
+		</http>
+		<processingClass>ru.rtsoft.amigo.cloud.statistics.StatisticsServicePlugin</processingClass>
+		<customConfig align="true" archivePath="/energyConsumer[MRID='_ULD_01']/p/archives/archive[purposeKey='FL24']" deleteOld="true" end="now" resourcePath="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='TM1H']" start="P-1D" timeResolution="PT1H">
+			<result param="rrmse" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='ER1D']"/>
+			<!-- <result param="rmse" path="systemValue:uld_01.rmse"/> -->
+			<!-- <result param="rmses" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='RMSE']"/> -->
+			<!-- можно указать не все параметры ответа -->
+			<!--<result param="rrmses" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='FL15']"/>-->
+		</customConfig>
+	</connection>
+</pluginSettings>
