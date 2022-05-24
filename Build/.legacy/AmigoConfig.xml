@@ -1,0 +1,1104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<amigoConfiguration>
+	<repositoryConfig>
+		<dbConfig name="AMIGO_DB_RussianIsland" serverIP="127.0.0.1" tCPport="27017"/>
+		<!-- Общая мнемоника для псевдоизмерений -->
+		<!-- Сценарии -->
+		<!-- AS** - автоматизированное управление -->
+		<!-- BS** - базовый сценарий -->
+		<!-- AB** - разница между сценариями -->
+
+		<!-- Функции -->
+		<!-- MX** - максимальные значения за интервал -->
+		<!-- MN** - минимальные значения за интервал -->
+		<!-- AV** - средние значения за интервал -->
+		<!-- DT** - приращение значения за интервал времени -->
+
+		<!-- Специфичные для оборудования -->
+		<!-- CH** - для накопителей - процессы относящиеся к заряду -->
+		<!-- DC** - для накопителей - процессы относящиеся к разряду -->
+		<!-- EF** - для накопителей - КПД накопителей -->
+		<!-- WT** - для накопителей - время работы накопителей -->
+		<!-- IP** - для регулярной сети - процессы, относящиеся к поступающей из сети мощности -->
+		<!-- OP** - для регулярной сети - процессы, относящиеся к передаваемой в сеть мощности -->
+		<!-- PS** - для СЭС - потенциальная выработка СЭС -->
+		<!-- US** - для СЭС - неиспользованная энергия СЭС -->
+
+		<!-- По временному разрешению -->
+		<!-- **MM - телеметрия -->
+		<!-- **1H - агрегация за час -->
+		<!-- **1D - агрегация за день -->
+		<!-- **1W - агрегация за неделю -->
+		<!-- **MO - агрегация за месяц -->
+		<!-- **1Y - агрегация за год -->
+		<!-- **TT - накопительный итог -->
+
+		<!-- Экономические -->
+		<!-- PF** - профит -->
+		<!-- PC** - относительный профит -->
+
+		<!-- Используемые TelPoint-ы: -->
+		<!-- p, e - используются исходя из размерности записываемых величин, помещаем в p - кВт, в e - кВт*ч -->
+		<!-- cost/costs - помещаем любые цены/деньги -->
+		<!-- workingTime - используется как хранилище для результатов расчета КИУМ -->
+		<!-- status - используется как хранилище КПД накопителей + времени работы накопителей -->
+
+		<!-- Параметры системы -->
+		<!-- Перенос цены за ЭЭ из SystemValues в _EPC_01/costs/LIMIT_PRICE_ENERGY -->
+		<pseudoMeasurement target="/energyProvider[MRID='_EPC_01']/costs/addResources/addResource[purposeKey='LIMIT_PRICE_ENERGY']" telemetry="false">
+			<source backupValue="0" coeff="1" path="SystemValue:cfg.gridEnergyPrice"/>
+		</pseudoMeasurement>
+
+		<!-- Перенос значения максимального перетока из SystemValues в _EXG_01/maxPOUT/TMMM -->
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/maxPOUT/addResources/addResource[purposeKey='TMMM']" telemetry="false">
+			<source backupValue="0" coeff="1" path="SystemValue:cfg.maxPOUT"/>
+		</pseudoMeasurement>
+
+
+		<!-- PVS_01 Солнечная станция -->
+		<!-- Энергия за интервал времени -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _PVS_01/e[TM1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<!-- _PVS_01/e[TM1D] = sum(_PVS_01/e[TM1H]) -->
+		<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='TM1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+		</pseudoMeasurement>
+
+		<!-- Снижение выбросов CO2 -->
+		<!-- Используемые purposeKey: CO1H/CO1D/CO1W/COMO/CO1Y/COTT -->
+		<!-- Энергию за 1 час делим на 2 -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='CO1H']" telemetry="false">
+			<source backupValue="0" coeff="0.5" path="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='TM1H']"/>
+		</pseudoMeasurement>
+
+		<!-- Количество спасенных деревьев -->
+		<!-- Используемые purposeKey: TSTT -->
+		<!-- Количество выбросов CO2 делим на тысячу -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<!-- Накопительный итог рассчитывается автоматически через агрегирование cumulative -->
+		<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='TSTT']" telemetry="false">
+			<source backupValue="0" coeff="0.001" path="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='CO1D']"/>
+		</pseudoMeasurement>
+
+
+		<!-- Расчет автоматического сценария -->
+		<!-- Мощность солнца -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Повторяет телеметрию активной мощности -->
+		<!-- Кладем в _PVS_01/p[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+		</pseudoMeasurement>
+
+		<!-- Энергия солнца -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Почасовые значения численно равны средней мощности за 1 час -->
+		<!-- Кладем в _PVS_01/e[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='AS1H']"/>
+		</pseudoMeasurement>
+
+		<!-- КИУМ -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Среднюю мощность в автоматическом сценарии за 1 час делим на номинальную мощность СЭС -->
+		<!-- Кладем в _PVS_01/workingTime[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+			<source backupValue="0" coeff="3.33333333333" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='AS1H']"/>
+		</pseudoMeasurement>
+
+		<!-- Расчет базового сценария - система работает без накопителей и интеллектуального управления -->
+		<!-- Мощность солнца -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y -->
+		<!-- Равна минимуму из фактической выработки солнца и нагрузки -->
+		<!-- Кладем в _PVS_01/p[BS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+			<function funcType="min">
+				<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+				<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+			</function>
+		</pseudoMeasurement>
+
+		<!-- Энергия солнца -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y/BSTT -->
+		<!-- Почасовые значения численно равны средней мощности за 1 час -->
+		<!-- Кладем в _PVS_01/e[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='BS1H']"/>
+		</pseudoMeasurement>
+
+		<!-- КИУМ -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y/BSTT -->
+		<!-- Среднюю мощность в базовом сценарии за 1 час делим на номинальную мощность СЭС -->
+		<!-- Кладем в _PVS_01/workingTime[BS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+			<source backupValue="0" coeff="3.33333333333" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='BS1H']"/>
+		</pseudoMeasurement>
+
+		<!-- Расчет разницы между сценариями -->
+		<!-- Увеличение отпуска СЭС -->
+		<!-- Используемые purposeKey: AB1H/AB1D/AB1W/ABMO/AB1Y -->
+		<!-- Кладем в _PVS_01/e[AB1H] -->
+		<!-- Равна разности между выработкой СЭС в автоматическом и базовом сценариях -->
+		<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='AB1H']" telemetry="false">
+			<function funcType="sum">
+				<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='AS1H']"/>
+				<source backupValue="0" coeff="-1" path="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='BS1H']"/>
+			</function>
+		</pseudoMeasurement>
+
+		<!-- Увеличение КИУМ СЭС -->
+		<!-- Используемые purposeKey: AB1H/AB1D/AB1W/ABMO/AB1Y -->
+		<!-- Кладем в _PVS_01/workingTime[AB1H] -->
+		<!-- Равна разности между выработкой СЭС в автоматическом и базовом сценариях -->
+		<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='AB1H']" telemetry="false">
+			<function funcType="sum">
+				<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='AS1H']"/>
+				<source backupValue="0" coeff="-1" path="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='BS1H']"/>
+			</function>
+		</pseudoMeasurement>
+
+
+		<!-- ULD_01 Нагрузка -->
+		<!-- Энергия за интервал времени -->
+		<!-- Используемые purposeKey: TM1H/TM1D/TM1W/TMMO/TM1Y/TMTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _ULD_01/e[TM1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<!-- _ULD_01/e[TM1D] = sum(_ULD_01/e[TM1H]) -->
+		<pseudoMeasurement target="/energyConsumer[MRID='_ULD_01']/e/addResources/addResource[purposeKey='TM1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+		</pseudoMeasurement>
+
+
+		<!-- Расчет автоматического сценария -->
+		<!-- Мощность нагрузки -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Повторяет телеметрию активной мощности -->
+		<!-- Кладем в _ULD_01/p[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<pseudoMeasurement target="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+		</pseudoMeasurement>
+
+		<!-- Энергия нагрузки -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Почасовые значения численно равны средней мощности за 1 час -->
+		<!-- Кладем в _ULD_01/e[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/energyConsumer[MRID='_ULD_01']/e/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='AS1H']"/>
+		</pseudoMeasurement>
+
+
+		<!-- Расчет базового сценария -->
+		<!-- Мощность нагрузки -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y/BSTT -->
+		<!-- Повторяет телеметрию активной мощности -->
+		<!-- Кладем в _ULD_01/p[BS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<pseudoMeasurement target="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+		</pseudoMeasurement>
+
+		<!-- Энергия нагрузки -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y/BSTT -->
+		<!-- Почасовые значения численно равны средней мощности за 1 час -->
+		<!-- Кладем в _ULD_01/e[BS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/energyConsumer[MRID='_ULD_01']/e/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='BS1H']"/>
+		</pseudoMeasurement>
+
+
+		<!-- EXG_01 Регулярная сеть -->
+		<!-- Энергия за интервал времени -->
+		<!-- Используемые purposeKey: TM1H/TM1D/TM1W/TMMO/TM1Y/TMTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _EXG_01/e[TM1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<!-- _EXG_01/e[TM1D] = sum(_EXG_01/e[TM1H]) -->
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='TM1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+		</pseudoMeasurement>
+
+		<!-- Потребленная из сети мощность -->
+		<!-- Используемые purposeKey: IPMM/IP5M/IP1H/IP1D/IP1W/IPMO/IP1Y/IPTT -->
+		<!-- Выбираем максимум между нулем и телеметрией мощности сети, тем самым выбираем область получения мощности из сети -->
+		<!-- Средние значения за 5 минут/час/день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='IPMM']" telemetry="false">
+			<function funcType="max">
+				<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='TMMM']"/>
+				<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+			</function>
+		</pseudoMeasurement>
+
+		<!-- Выданная в сеть мощность -->
+		<!-- Используемые purposeKey: OPMM/OP5M/OP1H/OP1D/OP1W/OPMO/OP1Y/OPTT -->
+		<!-- Выбираем максимум между нулем и инвертированной телеметрией мощности сети, тем самым выбираем область выдачи мощности в сеть -->
+		<!-- Средние значения за 5 минут/час/день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='OPMM']" telemetry="false">
+			<function funcType="max">
+				<source backupValue="0" coeff="-1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='TMMM']"/>
+				<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+			</function>
+		</pseudoMeasurement>
+
+		<!-- Полученная из сети энергия -->
+		<!-- Используемые purposeKey: IP1H/IP1D/IP1W/IPMO/IP1Y/IPTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _EXG_01/e[IP1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='IP1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='IP1H']"/>
+		</pseudoMeasurement>
+
+		<!-- Отданная в сеть энергия -->
+		<!-- Используемые purposeKey: OP1H/OP1D/OP1W/OPMO/OP1Y/OPTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _EXG_01/e[OP1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='OP1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='OP1H']"/>
+		</pseudoMeasurement>
+
+
+		<!-- Расчет автоматического сценария -->
+		<!-- Мощность, полученная из сети -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Повторяет измерения потребленной из сети активной мощности -->
+		<!-- Кладем в _EXG_01/p[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='IP1H']"/>
+		</pseudoMeasurement>
+
+		<!-- Энергия из сети -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Почасовые значения численно равны средней мощности за 1 час -->
+		<!-- Кладем в _PVS_01/e[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='AS1H']"/>
+		</pseudoMeasurement>
+
+		<!-- Стоимость полученной из сети энергии в автоматическом сценарии -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Рассчитывается как величина энергии, прокаченной за период, умноженная на стоимость ЭЭ -->
+		<!-- Кладем в _EXG_01/cost[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/cost/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+			<function funcType="multiply">
+				<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='AS1H']"/>
+				<source backupValue="0" coeff="1" path="SystemValue:cfg.gridEnergyPrice"/>
+			</function>
+		</pseudoMeasurement>
+
+
+		<!-- Расчет базового сценария -->
+		<!-- Потребление мощности из сети -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y/BSTT -->
+		<!-- Рассчитывается как разность между нагрузкой и солцнем в базовом сценарии, ограничено снизу нулем -->
+		<!-- Кладем в _EXG_01/p[BS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+			<function funcType="max">
+				<function funcType="sum">
+					<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/	addResource[purposeKey='BS1H']"/>
+					<source backupValue="0" coeff="-1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='BS1H']"/>
+				</function>
+				<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+			</function>
+		</pseudoMeasurement>
+
+		<!-- Энергия из сети -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y/BSTT -->
+		<!-- Почасовые значения численно равны средней мощности за 1 час -->
+		<!-- Кладем в _EXG_01/e[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='BS1H']"/>
+		</pseudoMeasurement>
+
+		<!-- Стоимость полученной из сети энергии в автоматическом сценарии -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y/BSTT -->
+		<!-- Рассчитывается как величина энергии, прокаченной за период, умноженная на стоимость ЭЭ -->
+		<!-- Кладем в _EXG_01/cost[BS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/cost/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+			<function funcType="multiply">
+				<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='BS1H']"/>
+				<source backupValue="0" coeff="1" path="SystemValue:cfg.gridEnergyPrice"/>
+			</function>
+		</pseudoMeasurement>
+
+		<!-- Расчет разницы между сценариями -->
+		<!-- Экономия ЭЭ из сети -->
+		<!-- Используемые purposeKey: AB1H/AB1D/AB1W/ABMO/AB1Y -->
+		<!-- Кладем в _EXG_01/e[AB1H] -->
+		<!-- Равна разности между потреблением из сети в автоматическом и базовом сценариях -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<!-- На всякий случай ограничиваем снизу нулем -->
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='AB1H']" telemetry="false">
+			<function funcType="max">
+				<function funcType="sum">
+					<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='AS1H']"/>
+					<source backupValue="0" coeff="-1" path="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='BS1H']"/>
+				</function>
+				<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+			</function>
+		</pseudoMeasurement>
+
+		<!-- Экономия оплаты ЭЭ из сети -->
+		<!-- Используемые purposeKey: AB1H/AB1D/AB1W/ABMO/AB1Y -->
+		<!-- Кладем в _EXG_01/cost[AB1H] -->
+		<!-- Равна разности между потреблением из сети в автоматическом и базовом сценариях -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<!-- На всякий случай ограничиваем снизу нулем -->
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/cost/addResources/addResource[purposeKey='AB1H']" telemetry="false">
+			<function funcType="max">
+				<function funcType="sum">
+					<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/cost/addResources/addResource[purposeKey='AS1H']"/>
+					<source backupValue="0" coeff="-1" path="/externalGrid[MRID='_EXG_01']/cost/addResources/addResource[purposeKey='BS1H']"/>
+				</function>
+				<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+			</function>
+		</pseudoMeasurement>
+
+
+		<!-- ESS_01 Накопитель ЛИА -->
+		<!-- Мощность заряда накопителя -->
+		<!-- Используемые purposeKey: CHMM/CH1M/CH5M/CH1H/CH1D/CH1W/CHMO/CH1Y/CHTT -->
+		<!-- Кладем в _ESS_01/p/CHMM -->
+		<!-- Рассчитывается как максимум между нулем и телеметрией мощности накопителя * -1, тем самым выбираем область заряда накопителя -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_01']/p/addResources/addResource[purposeKey='CHMM']" telemetry="false">
+			<function funcType="max">
+				<source backupValue="0" coeff="-1" path="/energyStoragingUnit[MRID='_ESS_01']/p/addResources/addResource[purposeKey='TMMM']"/>
+				<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+			</function>
+		</pseudoMeasurement>
+
+		<!-- Энергия заряда накопителя -->
+		<!-- Используемые purposeKey: CH1H/CH1D/CH1W/CHMO/CH1Y/CHTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _ESS_01/e[CH1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_01']/e/addResources/addResource[purposeKey='CH1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/energyStoragingUnit[MRID='_ESS_01']/p/addResources/addResource[purposeKey='CH1H']"/>
+		</pseudoMeasurement>
+
+		<!-- Мощность разряда накопителя -->
+		<!-- Используемые purposeKey: DCMM/DC1M/DC5M/DC1H/DC1D/DC1W/DCMO/DC1Y/DCTT -->
+		<!-- Кладем в _ESS_01/p/DCMM -->
+		<!-- Рассчитывается как максимум между нулем и телеметрией мощности накопителя * 1, тем самым выбираем область разряда накопителя -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_01']/p/addResources/addResource[purposeKey='DCMM']" telemetry="false">
+			<function funcType="max">
+				<source backupValue="0" coeff="1" path="/energyStoragingUnit[MRID='_ESS_01']/p/addResources/addResource[purposeKey='TMMM']"/>
+				<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+			</function>
+		</pseudoMeasurement>
+
+		<!-- Энергия разряда накопителя -->
+		<!-- Используемые purposeKey: DC1H/DC1D/DC1W/DCMO/DC1Y/DCTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _ESS_01/e[DC1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_01']/e/addResources/addResource[purposeKey='DC1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/energyStoragingUnit[MRID='_ESS_01']/p/addResources/addResource[purposeKey='DC1H']"/>
+		</pseudoMeasurement>
+
+
+		<!-- ESS_02 Накопитель ПРБ -->
+		<!-- Мощность заряда накопителя -->
+		<!-- Используемые purposeKey: CHMM/CH1M/CH5M/CH1H/CH1D/CH1W/CHMO/CH1Y/CHTT -->
+		<!-- Кладем в _ESS_02/p/CHMM -->
+		<!-- Рассчитывается как максимум между нулем и телеметрией мощности накопителя * -1, тем самым выбираем область заряда накопителя -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_02']/p/addResources/addResource[purposeKey='CHMM']" telemetry="false">
+			<function funcType="max">
+				<source backupValue="0" coeff="-1" path="/energyStoragingUnit[MRID='_ESS_02']/p/addResources/addResource[purposeKey='TMMM']"/>
+				<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+			</function>
+		</pseudoMeasurement>
+
+		<!-- Энергия заряда накопителя -->
+		<!-- Используемые purposeKey: CH1H/CH1D/CH1W/CHMO/CH1Y/CHTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _ESS_02/e[CH1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_02']/e/addResources/addResource[purposeKey='CH1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/energyStoragingUnit[MRID='_ESS_02']/p/addResources/addResource[purposeKey='CH1H']"/>
+		</pseudoMeasurement>
+
+		<!-- Мощность разряда накопителя -->
+		<!-- Используемые purposeKey: DCMM/DC1M/DC5M/DC1H/DC1D/DC1W/DCMO/DC1Y/DCTT -->
+		<!-- Кладем в _ESS_02/p/DCMM -->
+		<!-- Рассчитывается как максимум между нулем и телеметрией мощности накопителя * 1, тем самым выбираем область разряда накопителя -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_02']/p/addResources/addResource[purposeKey='DCMM']" telemetry="false">
+			<function funcType="max">
+				<source backupValue="0" coeff="1" path="/energyStoragingUnit[MRID='_ESS_02']/p/addResources/addResource[purposeKey='TMMM']"/>
+				<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+			</function>
+		</pseudoMeasurement>
+
+		<!-- Энергия разряда накопителя -->
+		<!-- Используемые purposeKey: DC1H/DC1D/DC1W/DCMO/DC1Y/DCTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _ESS_02/e[DC1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_02']/e/addResources/addResource[purposeKey='DC1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/energyStoragingUnit[MRID='_ESS_02']/p/addResources/addResource[purposeKey='DC1H']"/>
+		</pseudoMeasurement>
+
+
+
+		<!-- Потенциальная выработка СЭС. Каждый час запрашивает значение с прогноза -->
+		<!-- Неизвестно, работает или нет, закомментировано <pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='PS1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='PL24']"/>
+		</pseudoMeasurement> -->
+
+		<!-- Неиспользованная энергия СЭС -->
+		<!-- Неизвестно, работает или нет, закомментировано <pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='US1H']" telemetry="false">
+			<function funcType="max">
+				<function funcType="sum">
+					<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='PS1H']"/>
+					<source backupValue="0" coeff="-1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+				</function>
+				<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+			</function>
+		</pseudoMeasurement> -->
+
+		<!-- Перенос значений в коллекции для отображения на UI -->
+		<pseudoMeasurement target="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='UI1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+		</pseudoMeasurement>
+		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='UI1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+		</pseudoMeasurement>
+		<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_01']/p/addResources/addResource[purposeKey='UI1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/energyStoragingUnit[MRID='_ESS_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+		</pseudoMeasurement>
+		<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_02']/p/addResources/addResource[purposeKey='UI1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/energyStoragingUnit[MRID='_ESS_02']/p/addResources/addResource[purposeKey='TM1H']"/>
+		</pseudoMeasurement>
+		<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='UI1H']" telemetry="false">
+			<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+		</pseudoMeasurement>
+	</repositoryConfig>
+	<remotingConfig address="127.0.0.1"/>
+	<pluginTypes>
+		<!-- Состав модулей -->
+		<!-- ALOG -->
+		<!-- CBER -->
+		<!-- FLST -->
+		<!-- IDFL -->
+		<!-- IHTC -->
+		<!-- IHTS -->
+		<!-- IMDB -->
+		<!-- OMOD -->
+		<!-- SCLK -->
+		<!-- SSSW -->
+		<pluginType class="ru.rtsoft.amigo.alog.ALOG" desc="Журнал событий" jarLocation="default" nameOfType="ALOG" version="1.0-SNAPSHOT">
+			<operations>
+				<operation exPeriod="PT0S">RECD</operation>
+			</operations>
+			<pluginIface>
+				<commands>
+					<command action="start" operName="INIT"/>
+					<command action="start" operName="RECD"/>
+					<command action="stop" operName="RECD"/>
+					<command action="pause" operName="RECD"/>
+					<command action="start" operName="RSET"/>
+				</commands>
+				<events>
+					<event action="start" operName="INIT"/>
+					<event action="success" operName="INIT"/>
+					<event action="fail" operName="INIT"/>
+					<event action="start" operName="RECD"/>
+					<event action="pause" operName="RECD"/>
+					<event action="stop" operName="RECD"/>
+					<event action="success" operName="RECD"/>
+					<event action="fail" operName="RECD"/>
+				</events>
+			</pluginIface>
+		</pluginType>
+		<pluginType class="ru.rtsoft.amigo.cber.CBER" desc="Оперативное управление" jarLocation="default" nameOfType="CBER" version="1.0-SNAPSHOT">
+			<operations>
+				<operation exPeriod="PT0S" desc="Задача управления накопителями и генераторами по текущим данным">GVRN</operation>
+			</operations>
+			<pluginIface>
+				<commands>
+					<command action="start" operName="INIT"/>
+					<command action="start" operName="GVRN"/>
+					<command action="stop" operName="GVRN"/>
+					<command action="start" operName="RSET"/>
+				</commands>
+				<events>
+					<event operName="INIT" action="start"/>
+					<event operName="INIT" action="success"/>
+					<event operName="INIT" action="fail"/>
+					<event operName="GVRN" action="start"/>
+                    <event operName="GVRN" action="stop"/>
+                    <event operName="GVRN" action="fail"/>
+				</events>
+			</pluginIface>
+		</pluginType>
+		<pluginType class="ru.rtsoft.amigo.flst.FLST" desc="Цикличный прогноз" jarLocation="default" nameOfType="FLST" version="1.0-SNAPSHOT">
+			<operations>
+				<operation desc="Прогноз на 15 минут, дискретность 1 минута" exPeriod="PT1M">LF15</operation>
+				<operation desc="Прогноз на сутки, дискретность 1 час" exPeriod="PT3M">LF24</operation>
+			</operations>
+			<pluginIface>
+				<commands>
+					<command action="start" operName="INIT"/>
+					<command action="start" operName="LF15"/>
+					<command action="stop" operName="LF15"/>
+					<command action="start" operName="LF24"/>
+					<command action="stop" operName="LF24"/>
+					<command action="start" operName="RSET"/>
+				</commands>
+				<events>
+					<event action="start" operName="INIT"/>
+					<event action="success" operName="INIT"/>
+					<event action="fail" operName="INIT"/>
+					<event action="start" operName="LF15"/>
+					<event action="stop" operName="LF15"/>
+					<event action="fail" operName="LF15"/>
+					<event action="success" operName="LF15"/>
+					<event action="start" operName="LF24"/>
+					<event action="stop" operName="LF24"/>
+					<event action="fail" operName="LF24"/>
+					<event action="success" operName="LF24"/>
+				</events>
+				<addResourceGroups>
+					<addResourceGroup desc="TMMM" name="TMMM">TMMM</addResourceGroup>
+					<addResourceGroup desc="FL15" name="FL15">FL15</addResourceGroup>
+					<addResourceGroup desc="FL24" name="FL24">FL24</addResourceGroup>
+				</addResourceGroups>
+			</pluginIface>
+		</pluginType>
+		<pluginType class="ru.rtsoft.amigo.idfl.IDFL" desc="Загрузки данных из файлов" jarLocation="default" nameOfType="IDFL" version="1.0-SNAPSHOT">
+			<operations>
+				<operation>LOAD</operation>
+				<operation>TRFF</operation>
+				<operation exPeriod="PT0S">USER</operation>
+			</operations>
+			<pluginIface>
+				<commands>
+					<command action="start" operName="INIT"/>
+					<command action="start" operName="LOAD"/>
+					<command action="stop" operName="LOAD"/>
+					<command action="start" operName="TRFF"/>
+					<command action="stop" operName="TRFF"/>
+					<command action="start" operName="USER"/>
+					<command action="stop" operName="USER"/>
+					<command action="start" operName="RSET"/>
+				</commands>
+				<events>
+					<event action="start" operName="INIT"/>
+					<event action="success" operName="INIT"/>
+					<event action="fail" operName="INIT"/>
+					<event action="start" operName="LOAD"/>
+					<event action="stop" operName="LOAD"/>
+					<event action="success" operName="LOAD"/>
+					<event action="fail" operName="LOAD"/>
+					<event action="start" operName="TRFF"/>
+					<event action="stop" operName="TRFF"/>
+					<event action="success" operName="TRFF"/>
+					<event action="fail" operName="TRFF"/>
+					<event action="start" operName="USER"/>
+					<event action="stop" operName="USER"/>
+					<event action="success" operName="USER"/>
+					<event action="fail" operName="USER"/>
+				</events>
+			</pluginIface>
+		</pluginType>
+		<pluginType class="ru.rtsoft.amigo.ihtc.IHTC" desc="HTTP-клиент" jarLocation="default" nameOfType="IHTC" version="1.0-SNAPSHOT">
+			<operations>
+				<operation exPeriod="PT5M">CLFC</operation>
+				<operation exPeriod="P1D" persistent="true" exOffset="PT5M">CLFE</operation>
+				<operation>CLOM</operation>
+				<operation exPeriod="P7D" persistent="true">CLTM</operation>
+			</operations>
+			<pluginIface>
+				<commands>
+					<command action="start" operName="INIT"/>
+					<command action="start" desc="Запрос прогноза" operName="CLFC"/>
+					<command action="stop" desc="Остановить запрос прогноза" operName="CLFC"/>
+					<command action="start" desc="Запрос расчета ошибки прогноза" operName="CLFE"/>
+					<command action="stop" desc="Остановить запрос расчета ошибки прогноза" operName="CLFE"/>
+					<command action="start" desc="Запрос оптимизации" operName="CLOM"/>
+					<command action="stop" desc="Остановить запрос оптимизации" operName="CLOM"/>
+					<command action="start" desc="Запрос обучения модели" operName="CLTM"/>
+					<command action="stop" desc="Остановить запрос обучения модели" operName="CLTM"/>
+					<command action="start" operName="RSET"/>
+				</commands>
+				<events>
+					<event action="start" operName="INIT"/>
+					<event action="success" operName="INIT"/>
+					<event action="fail" operName="INIT"/>
+					<event action="start" operName="CLFC"/>
+					<event action="success" operName="CLFC"/>
+					<event action="fail" operName="CLFC"/>
+					<event action="start" operName="CLFE"/>
+					<event action="success" operName="CLFE"/>
+					<event action="fail" operName="CLFE"/>
+					<event action="start" operName="CLOM"/>
+					<event action="success" operName="CLOM"/>
+					<event action="fail" operName="CLOM"/>
+					<event action="start" operName="CLTM"/>
+					<event action="success" operName="CLTM"/>
+					<event action="fail" operName="CLTM"/>
+				</events>
+			</pluginIface>
+		</pluginType>   
+		<pluginType class="ru.rtsoft.amigo.ihts.IHTS" desc="Веб-сервер" jarLocation="default" nameOfType="IHTS" version="1.0-SNAPSHOT">
+			<operations>
+				<operation exPeriod="PT0S">WEBS</operation>
+				<operation exPeriod="PT0S">WSOC</operation>
+			</operations>
+			<pluginIface>
+				<commands>
+					<command action="start" operName="INIT"/>
+					<command action="start" desc="Запуск HTTP-сервера" operName="WEBS"/>
+					<command action="stop" desc="Останов HTTP-сервера" operName="WEBS"/>
+					<command action="start" operName="RSET"/>
+				</commands>
+				<events>
+					<event action="start" operName="INIT"/>
+					<event action="success" operName="INIT"/>
+					<event action="start" operName="WEBS"/>
+					<event action="stop" operName="WEBS"/>
+					<event action="fail" operName="WEBS"/>
+					<event action="start" operName="WSOC"/>
+					<event action="success" operName="WSOC"/>
+					<event action="fail" operName="WSOC"/>
+				</events>
+			</pluginIface>
+		</pluginType>
+		<pluginType class="ru.rtsoft.amigo.imdb.IMDB" desc="Сбор данных Modbus TCP" jarLocation="default" nameOfType="IMDB" version="1.0-SNAPSHOT">
+			<operations>
+				<operation exPeriod="PT0S">WORK</operation>
+			</operations>
+			<pluginIface>
+				<commands>
+					<command action="start" operName="INIT"/>
+					<command action="start" operName="WORK"/>
+					<command action="start" operName="RSET"/>
+				</commands>
+				<events>
+					<event action="start" operName="INIT"/>
+					<event action="success" operName="INIT"/>
+					<event action="fail" operName="INIT"/>
+					<event action="start" operName="WORK"/>
+					<event action="success" operName="WORK"/>
+					<event action="fail" operName="WORK"/>
+				</events>
+				<addResourceGroups>
+					<addResourceGroup desc="TMMM" name="TMMM">TMMM</addResourceGroup>
+				</addResourceGroups>
+			</pluginIface>
+		</pluginType>
+		<pluginType class="ru.rtsoft.amigo.sclk.SCLK" desc="Модуль таймеров" jarLocation="default" nameOfType="SCLK" version="1.0-SNAPSHOT">
+			<operations>
+				<operation>TURN</operation>
+			</operations>
+			<pluginIface>
+				<commands>
+					<command action="start" operName="INIT"/>
+					<command action="start" operName="TURN"/>
+					<command action="stop" operName="TURN"/>
+					<command action="pause" operName="TURN"/>
+					<command action="start" operName="RSET"/>
+				</commands>
+				<events>
+					<event action="start" operName="INIT"/>
+					<event action="success" operName="INIT"/>
+					<event action="fail" operName="INIT"/>
+					<event action="start" operName="TURN"/>
+					<event action="success" operName="TURN"/>
+					<event action="fail" operName="TURN"/>
+				</events>
+			</pluginIface>
+		</pluginType>
+		<pluginType class="ru.rtsoft.amigo.sssw.SSSW" desc="Смена режимов работы" jarLocation="default" nameOfType="SSSW" version="1.0-SNAPSHOT">
+			<operations>
+				<operation>STAT</operation>
+				<operation>IDLE</operation>
+				<operation>AUTO</operation>
+			</operations>
+			<pluginIface>
+				<commands>
+					<command action="start" operName="INIT"/>
+					<command action="start" operName="STAT"/>
+					<command action="stop" operName="STAT"/>
+					<command action="pause" operName="STAT"/>
+					<command action="start" operName="RSET"/>
+				</commands>
+				<events>
+					<event action="start" operName="INIT"/>
+					<event action="success" operName="INIT"/>
+					<event action="fail" operName="INIT"/>
+					<event action="start" operName="STAT"/>
+					<event action="success" operName="STAT"/>
+					<event action="stop" operName="STAT"/>
+					<event action="fail" operName="STAT"/>
+					<event action="success" operName="IDLE"/>
+					<event action="stop" operName="IDLE"/>
+					<event action="success" operName="AUTO"/>
+					<event action="stop" operName="AUTO"/>
+				</events>
+			</pluginIface>
+		</pluginType>
+	</pluginTypes>
+	<pluginConfigs>
+		<pluginConfig desc="Запись журнала ПО (module-journal)" pluginInstance="0" pluginType="ALOG" url="default">
+			<pluginSettings path="./subconfigs/stage/ALOG-00.xml"/>
+		</pluginConfig>
+		<pluginConfig desc="Запись журнала объекта управления (main-journal)" pluginInstance="1" pluginType="ALOG" url="default">
+			<pluginSettings path="./subconfigs/stage/ALOG-01.xml"/>
+		</pluginConfig>
+
+		<pluginConfig desc="Модуль управления оборудованием" pluginInstance="0" pluginType="CBER" url="default">
+			<transientParams>
+				<!-- <repoLink repoPath="/externalGrid[MRID='_EXG_01']/maxPOUT/addResources/addResource[purposeKey='TMMM']" configPath="/maxPowerExport"/> -->
+				<!-- <repoLink repoPath="SystemValue:cfg.setValueThreshold" configPath="/setValueThreshold"/> -->
+				<repoLink repoPath="SystemValue:cfg.maxPOUT" configPath="/maxPowerExport"/>
+			</transientParams>
+			<pluginSettings path="./subconfigs/stage/CBER-00.xml"/>
+		</pluginConfig>
+
+		<pluginConfig desc="Загрузка заглушки цены СЭС" pluginInstance="1" pluginType="FLST" url="default">
+			<pluginSettings path="./subconfigs/stage/FLST-01.xml"/>
+		</pluginConfig>
+		<pluginConfig desc="Загрузка списка пользователей" pluginInstance="0" pluginType="IDFL" url="default">
+			<pluginSettings path="./subconfigs/stage/IDFL-00.xml"/>
+		</pluginConfig>
+
+		<pluginConfig desc="HTTP-клиент, запрос оптимизации" pluginInstance="0" pluginType="IHTC" url="default">
+			<pluginSettings path="./subconfigs/stage/IHTC-00.xml"/>
+		</pluginConfig>
+		<pluginConfig desc="HTTP-клиент, обучение прогнозера нагрузки и запрос прогноза" pluginInstance="1" pluginType="IHTC" url="default">
+			<pluginSettings path="./subconfigs/stage/IHTC-01.xml"/>
+		</pluginConfig>
+		<pluginConfig desc="HTTP-клиент, обучение прогнозера СЭС и запрос прогноза" pluginInstance="11" pluginType="IHTC" url="default">
+			<pluginSettings path="./subconfigs/stage/IHTC-11.xml"/>
+		</pluginConfig>
+
+		<pluginConfig desc="Сервер REST, WS, AMIGO Web Monitor" pluginInstance="0" pluginType="IHTS" url="default">
+			<pluginSettings path="./subconfigs/stage/IHTS-00.xml"/>
+		</pluginConfig>
+
+		<pluginConfig desc="Связь с нагрузкой" pluginInstance="1" pluginType="IMDB" url="default">
+			<pluginSettings path="./subconfigs/stage/IMDB-01.xml"/>
+		</pluginConfig>
+		<pluginConfig desc="Связь с СЭС" pluginInstance="11" pluginType="IMDB" url="default">
+			<pluginSettings path="./subconfigs/stage/IMDB-11.xml"/>
+		</pluginConfig>
+		<pluginConfig desc="Связь с накопителем 1 - Li-ion" pluginInstance="21" pluginType="IMDB" url="default">
+			<pluginSettings path="./subconfigs/stage/IMDB-21.xml"/>
+		</pluginConfig>
+		<pluginConfig desc="Связь с накопителем 2 - Redox" pluginInstance="22" pluginType="IMDB" url="default">
+			<pluginSettings path="./subconfigs/stage/IMDB-22.xml"/>
+		</pluginConfig>
+
+		<pluginConfig desc="Связь с сетью" pluginInstance="31" pluginType="IMDB" url="default">
+			<pluginSettings path="./subconfigs/stage/IMDB-31.xml"/>
+		</pluginConfig>
+
+		<pluginConfig desc="Задержка старта оптимизатора" pluginInstance="0" pluginType="SCLK" url="default">
+			<pluginSettings path="./subconfigs/stage/SCLK-00.xml"/>
+		</pluginConfig>
+		<pluginConfig desc="Задержка перезапуска прогноза нагрузки при ошибке" pluginInstance="1" pluginType="SCLK" url="default">
+			<pluginSettings path="./subconfigs/stage/SCLK-01.xml"/>
+		</pluginConfig>
+		<pluginConfig desc="Задержка перезапуска прогноза СЭС при ошибке" pluginInstance="11" pluginType="SCLK" url="default">
+			<pluginSettings path="./subconfigs/stage/SCLK-11.xml"/>
+		</pluginConfig>
+
+		<pluginConfig desc="Смена режимов" pluginInstance="0" pluginType="SSSW" url="default">
+			<pluginSettings path="./subconfigs/stage/SSSW-00.xml"/>
+		</pluginConfig>
+	</pluginConfigs>
+	<schedulerConfigs>
+		<schedulerConfig>
+			<!-- Старт при инициализации -->
+			<!-- Запуск логера для журналов событий при инициализации -->
+			<rule desc="Запуск ALOG-00 (module-journal)">
+				<actions>
+					<action action="start" operName="RECD" pluginInstance="0" pluginType="ALOG"/>
+				</actions>
+				<conditions>
+					<andOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="0" pluginType="ALOG"/>
+					</andOper>
+				</conditions>
+			</rule>
+			<!-- Временно отключено т.к. нет адаптера для работы с оборудованием проекта <rule desc="Запуск ALOG-01 (main-journal)">
+				<actions>
+					<action action="start" operName="RECD" pluginInstance="1" pluginType="ALOG"/>
+				</actions>
+				<conditions>
+					<andOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="1" pluginType="ALOG"/>
+					</andOper>
+				</conditions>
+			</rule> -->
+
+			<rule desc="Запуск IDFL-00">
+				<actions>
+					<action action="start" operName="USER" pluginInstance="0" pluginType="IDFL"/>
+				</actions>
+				<conditions>
+					<orOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="0" pluginType="IDFL"/>
+					</orOper>
+				</conditions>
+			</rule>
+			<!-- Временно отключено, т.к. данные уже загружены в систему, повторная загрузка необходима после очистки БД <rule desc="Запуск IDFL-01">
+				<actions>
+					<action action="start" operName="LOAD" pluginInstance="1" pluginType="IDFL"/>
+					<action action="start" operName="TRFF" pluginInstance="1" pluginType="IDFL"/>
+				</actions>
+				<conditions>
+					<orOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="1" pluginType="IDFL"/>
+					</orOper>
+				</conditions>
+			</rule> -->
+
+			<rule desc="Запуск IHTC-01 CLFC">
+				<actions>
+					<action action="start" operName="CLFC" pluginInstance="1" pluginType="IHTC"/>
+				</actions>
+				<conditions>
+					<orOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="1" pluginType="IHTC"/>
+					</orOper>
+				</conditions>
+			</rule>
+
+			<rule desc="Запуск IHTC-11 CLFC">
+				<actions>
+					<action action="start" operName="CLFC" pluginInstance="11" pluginType="IHTC"/>
+				</actions>
+				<conditions>
+					<orOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="11" pluginType="IHTC"/>
+					</orOper>
+				</conditions>
+			</rule>
+
+			<rule desc="Запуск IHTS-00">
+				<actions>
+					<action action="start" operName="WEBS" pluginInstance="0" pluginType="IHTS"/>
+				</actions>
+				<conditions>
+					<orOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="0" pluginType="IHTS"/>
+						<trigger action="fail" negation="false" operName="WEBS" pluginInstance="0" pluginType="IHTS"/>
+					</orOper>
+				</conditions>
+			</rule>
+
+			<!-- IMDB-01 - Нагрузка ULD-01 -->
+			<rule desc="Запуск IMDB-01">
+				<actions>
+					<action action="start" operName="WORK" pluginInstance="1" pluginType="IMDB"/>
+				</actions>
+				<conditions>
+					<orOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="1" pluginType="IMDB"/>
+						<trigger action="fail" negation="false" operName="WORK" pluginInstance="1" pluginType="IMDB"/>
+					</orOper>
+				</conditions>
+			</rule>
+			<!-- IMDB-11 - СЭС PVS-01 -->
+			<rule desc="Запуск IMDB-11">
+				<actions>
+					<action action="start" operName="WORK" pluginInstance="11" pluginType="IMDB"/>
+				</actions>
+				<conditions>
+					<orOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="11" pluginType="IMDB"/>
+						<trigger action="fail" negation="false" operName="WORK" pluginInstance="11" pluginType="IMDB"/>
+					</orOper>
+				</conditions>
+			</rule>
+			<!-- IMDB-21 - СНЭ ESS-01 -->
+			<rule desc="Запуск IMDB-21">
+				<actions>
+					<action action="start" operName="WORK" pluginInstance="21" pluginType="IMDB"/>
+				</actions>
+				<conditions>
+					<orOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="21" pluginType="IMDB"/>
+						<trigger action="fail" negation="false" operName="WORK" pluginInstance="21" pluginType="IMDB"/>
+					</orOper>
+				</conditions>
+			</rule>
+			<!-- IMDB-22 - СНЭ ESS-02 -->
+			<rule desc="Запуск IMDB-22">
+				<actions>
+					<action action="start" operName="WORK" pluginInstance="22" pluginType="IMDB"/>
+				</actions>
+				<conditions>
+					<orOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="22" pluginType="IMDB"/>
+						<trigger action="fail" negation="false" operName="WORK" pluginInstance="22" pluginType="IMDB"/>
+					</orOper>
+				</conditions>
+			</rule>
+			<!-- IMDB-31 - СЭС EXG-01 -->
+			<rule desc="Запуск IMDB-31">
+				<actions>
+					<action action="start" operName="WORK" pluginInstance="31" pluginType="IMDB"/>
+				</actions>
+				<conditions>
+					<orOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="31" pluginType="IMDB"/>
+						<trigger action="fail" negation="false" operName="WORK" pluginInstance="31" pluginType="IMDB"/>
+					</orOper>
+				</conditions>
+			</rule>
+
+			<!-- Заглушка прогнозов из CSV -->
+			<!-- Не используется после введения облачных прогнозов <rule desc="Запуск FLST-00">
+				<actions>
+					<action action="start" operName="LF15" pluginInstance="0" pluginType="FLST"/>
+					<action action="start" operName="LF24" pluginInstance="0" pluginType="FLST"/>
+				</actions>
+				<conditions>
+					<orOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="0" pluginType="FLST"/>
+					</orOper>
+				</conditions>
+			</rule> -->
+			<!-- Заглушка цен СЭС -->
+			<rule desc="Запуск FLST-01">
+				<actions>
+					<action action="start" operName="LF24" pluginInstance="1" pluginType="FLST"/>
+				</actions>
+				<conditions>
+					<orOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="1" pluginType="FLST"/>
+					</orOper>
+				</conditions>
+			</rule>
+
+			<!-- Управление режимами работы -->
+			<!-- SSSW-00 - смена режимов работы системы -->
+			<rule desc="Запуск SSSW-00">
+				<actions>
+					<action action="start" operName="STAT" pluginInstance="0" pluginType="SSSW"/>
+				</actions>
+				<conditions>
+					<andOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="0" pluginType="SSSW"/>
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="0" pluginType="CBER"/>
+					</andOper>
+				</conditions>
+			</rule>
+			<!-- Отключение управления при нажатии кнопки на интерфейсе "отключить автоматическое управление" -->
+			<rule desc="Останов CBER-00 при SSSW-IDLE">
+				<actions>
+					<action action="stop" operName="GVRN" pluginInstance="0" pluginType="CBER"/>
+				</actions>
+				<conditions>
+					<andOper negation="false">
+						<trigger action="success" negation="false" operName="IDLE" pluginInstance="0" pluginType="SSSW"/>
+					</andOper>
+				</conditions>
+			</rule>
+			<!-- Включение управления при нажатии кнопки на интерфейсе "включить автоматическое управление" -->
+			<rule desc="Запуск CBER-00 при SSSW-AUTO">
+				<actions>
+					<action action="start" operName="GVRN" pluginInstance="0" pluginType="CBER"/>
+				</actions>
+				<conditions>
+					<andOper negation="false">
+						<trigger action="success" negation="false" operName="AUTO" pluginInstance="0" pluginType="SSSW"/>
+					</andOper>
+				</conditions>
+			</rule>
+
+			<!-- Запускаем счет задержки старта оптимизации после загрузки прогнозов -->
+			<rule desc="Запуск SCLK-00 TURN">
+				<actions>
+					<action action="start" operName="TURN" pluginInstance="0" pluginType="SCLK"/>
+				</actions>
+				<conditions>
+					<andOper negation="false">
+						<trigger action="success" negation="false" operName="CLFC" pluginInstance="1" pluginType="IHTC"/>
+						<trigger action="success" negation="false" operName="CLFC" pluginInstance="11" pluginType="IHTC"/>
+					</andOper>
+				</conditions>
+			</rule>
+			<!-- Автоматический запуск облачной оптимизации по прошествию 10 секунд после обновления прогнов -->
+			<rule desc="Запуск IHTC-00 CLOM">
+				<actions>
+					<action action="start" operName="CLOM" pluginInstance="0" pluginType="IHTC"/>
+				</actions>
+				<conditions>
+					<andOper negation="false">
+						<trigger action="success" negation="false" operName="TURN" pluginInstance="0" pluginType="SCLK"/>
+					</andOper>
+				</conditions>
+			</rule>
+
+			<!-- Запускаем счет задержки перезапуска запроса прогноза нагрузки при ошибке -->
+			<rule desc="Запуск SCLK-01 TURN">
+				<actions>
+					<action action="start" operName="TURN" pluginInstance="1" pluginType="SCLK"/>
+				</actions>
+				<conditions>
+					<andOper negation="false">
+						<trigger action="fail" negation="false" operName="CLFC" pluginInstance="1" pluginType="IHTC"/>
+					</andOper>
+				</conditions>
+			</rule>
+			<!-- Запускаем счет задержки перезапуска запроса прогноза нагрузки при ошибке -->
+			<rule desc="Запуск SCLK-11 TURN">
+				<actions>
+					<action action="start" operName="TURN" pluginInstance="11" pluginType="SCLK"/>
+				</actions>
+				<conditions>
+					<andOper negation="false">
+						<trigger action="fail" negation="false" operName="CLFC" pluginInstance="11" pluginType="IHTC"/>
+					</andOper>
+				</conditions>
+			</rule>
+			<!-- Автоматический перезапуск запросов прогнозов при ошибке -->
+			<rule desc="Запуск IHTC-01-CLCF при SCLK-01-TURN-success">
+				<actions>
+					<action action="start" operName="CLFC" pluginInstance="1" pluginType="IHTC"/>
+				</actions>
+				<conditions>
+					<andOper negation="false">
+						<trigger action="success" negation="false" operName="TURN" pluginInstance="1" pluginType="SCLK"/>
+					</andOper>
+				</conditions>
+			</rule>
+			<rule desc="Запуск IHTC-11-CLCF при SCLK-11-TURN-success">
+				<actions>
+					<action action="start" operName="CLFC" pluginInstance="11" pluginType="IHTC"/>
+				</actions>
+				<conditions>
+					<andOper negation="false">
+						<trigger action="success" negation="false" operName="TURN" pluginInstance="11" pluginType="SCLK"/>
+					</andOper>
+				</conditions>
+			</rule>
+		</schedulerConfig>
+	</schedulerConfigs>
+</amigoConfiguration>
