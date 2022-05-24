@@ -1,0 +1,6 @@
+<pluginSettings>
+	<systemValue defaultValue="idle" name="cfg.mode" switchToDefaultOnStart="true">
+		<value event="IDLE" repoValue="idle"/>
+		<value event="AUTO" repoValue="auto"/>
+	</systemValue>
+</pluginSettings>
