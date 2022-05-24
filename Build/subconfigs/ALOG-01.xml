@@ -1,0 +1,5 @@
+<pluginSettings>
+	<logTableName>main_journal</logTableName>
+	<!-- <logProcessor>ru.rtsoft.amigo.alog.loggers.RussianIslandEventSubscriber</logProcessor> -->
+	<logProcessor>ru.rtsoft.amigo.alog.loggers.tyumen.EquipmentEventSubscriber</logProcessor>
+</pluginSettings>
