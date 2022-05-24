@@ -1,0 +1,10 @@
+<pluginSettings host="127.0.0.1" port="8080">
+	<endpoint prefix="api" operation="RAPI" handler="ru.rtsoft.amigo.irst.RestApiHandler">
+		<sleep>PT1S</sleep>
+	</endpoint>
+	<endpoint prefix="ws" operation="WSOC" handler="ru.rtsoft.amigo.ihts.plugin.GenericTelemetryWebSocket"/>
+	<endpoint prefix="monitor" operation="WMON" handler="ru.rtsoft.amigo.ihts.plugin.WebappPluginHandler">
+		<localDir>plugins/lib/web_monitor</localDir>
+		<systemStateHandler>ru.rtsoft.amigo.ihts.EventManagerSubscriber</systemStateHandler>
+	</endpoint>
+</pluginSettings>
