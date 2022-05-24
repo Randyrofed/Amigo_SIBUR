@@ -1,0 +1,11 @@
+<pluginSettings>
+	<forecastShift>0</forecastShift>
+	<forecastStorage>csv/forecasts</forecastStorage>
+	<mode>normal</mode>
+	<mappings>
+		<!-- Загрузка прогнозов нагрузки и выработки солнца -->
+		<mapping xpath="/energyConsumer[MRID='_ULD_01']/p" fileName="/_ULD_01_p_FL24.csv" type="simple" dataResolution="PT1S"/>
+
+		<mapping xpath="/generatingUnit[MRID='_PVS_01']/p" fileName="/_PVS_01_p_FL24.csv" type="simple" dataResolution="PT1S"/>
+	</mappings>
+</pluginSettings>
