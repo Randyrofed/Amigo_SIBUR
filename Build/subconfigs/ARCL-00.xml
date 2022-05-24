@@ -1,0 +1,590 @@
+<pluginSettings>
+	<tasks>
+		<!-- PVS_01 Солнечная станция -->
+
+		<!-- Энергия за интервал времени -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _PVS_01/e[TM1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<!-- _PVS_01/e[TM1D] = sum(_PVS_01/e[TM1H]) -->
+		<task>
+			<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='TM1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Снижение выбросов CO2 -->
+		<!-- Используемые purposeKey: CO1H/CO1D/CO1W/COMO/CO1Y/COTT -->
+		<!-- Энергию за 1 час делим на 2 -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='CO1H']" telemetry="false">
+				<source backupValue="0" coeff="0.5" path="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='TM1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Количество спасенных деревьев -->
+		<!-- Используемые purposeKey: TSTT -->
+		<!-- Количество выбросов CO2 делим на тысячу -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<!-- Накопительный итог рассчитывается автоматически через агрегирование cumulative -->
+		<task>
+			<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='TSTT']" telemetry="false">
+				<source backupValue="0" coeff="0.001" path="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='COTT']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Расчет автоматического сценария -->
+		<!-- Мощность солнца -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Повторяет телеметрию активной мощности -->
+		<!-- Кладем в _PVS_01/p[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<task>
+			<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Энергия солнца -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Почасовые значения численно равны средней мощности за 1 час -->
+		<!-- Кладем в _PVS_01/e[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='AS1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- КИУМ -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Среднюю мощность в автоматическом сценарии за 1 час делим на номинальную мощность СЭС -->
+		<!-- Кладем в _PVS_01/workingTime[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<task>
+			<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+				<source backupValue="0" coeff="3.33333333333" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='AS1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Расчет базового сценария - система работает без накопителей и интеллектуального управления -->
+		<!-- Мощность солнца -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y -->
+		<!-- Равна минимуму из фактической выработки солнца и нагрузки -->
+		<!-- Кладем в _PVS_01/p[BS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<task>
+			<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+				<function funcType="min">
+					<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+					<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+				</function>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Энергия солнца -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y/BSTT -->
+		<!-- Почасовые значения численно равны средней мощности за 1 час -->
+		<!-- Кладем в _PVS_01/e[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='BS1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- КИУМ -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y/BSTT -->
+		<!-- Среднюю мощность в базовом сценарии за 1 час делим на номинальную мощность СЭС -->
+		<!-- Кладем в _PVS_01/workingTime[BS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<task>
+			<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+				<source backupValue="0" coeff="3.33333333333" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='BS1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Расчет разницы между сценариями -->
+		<!-- Увеличение отпуска СЭС -->
+		<!-- Используемые purposeKey: AB1H/AB1D/AB1W/ABMO/AB1Y -->
+		<!-- Кладем в _PVS_01/e[AB1H] -->
+		<!-- Равна разности между выработкой СЭС в автоматическом и базовом сценариях -->
+		<task>
+			<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='AB1H']" telemetry="false">
+				<function funcType="sum">
+					<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='AS1H']"/>
+					<source backupValue="0" coeff="-1" path="/generatingUnit[MRID='_PVS_01']/e/addResources/addResource[purposeKey='BS1H']"/>
+				</function>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Увеличение КИУМ СЭС -->
+		<!-- Используемые purposeKey: AB1H/AB1D/AB1W/ABMO/AB1Y -->
+		<!-- Кладем в _PVS_01/workingTime[AB1H] -->
+		<!-- Равна разности между выработкой СЭС в автоматическом и базовом сценариях -->
+		<task>
+			<pseudoMeasurement target="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='AB1H']" telemetry="false">
+				<function funcType="sum">
+					<source backupValue="0" coeff="1" path="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='AS1H']"/>
+					<source backupValue="0" coeff="-1" path="/generatingUnit[MRID='_PVS_01']/workingTime/addResources/addResource[purposeKey='BS1H']"/>
+				</function>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+
+		<!-- ULD_01 Нагрузка -->
+		<!-- Энергия за интервал времени -->
+		<!-- Используемые purposeKey: TM1H/TM1D/TM1W/TMMO/TM1Y/TMTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _ULD_01/e[TM1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<!-- _ULD_01/e[TM1D] = sum(_ULD_01/e[TM1H]) -->
+		<task>
+			<pseudoMeasurement target="/energyConsumer[MRID='_ULD_01']/e/addResources/addResource[purposeKey='TM1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Расчет автоматического сценария -->
+		<!-- Мощность нагрузки -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Повторяет телеметрию активной мощности -->
+		<!-- Кладем в _ULD_01/p[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<task>
+			<pseudoMeasurement target="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Энергия нагрузки -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Почасовые значения численно равны средней мощности за 1 час -->
+		<!-- Кладем в _ULD_01/e[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/energyConsumer[MRID='_ULD_01']/e/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='AS1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Расчет базового сценария -->
+		<!-- Мощность нагрузки -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y/BSTT -->
+		<!-- Повторяет телеметрию активной мощности -->
+		<!-- Кладем в _ULD_01/p[BS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<task>
+			<pseudoMeasurement target="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Энергия нагрузки -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y/BSTT -->
+		<!-- Почасовые значения численно равны средней мощности за 1 час -->
+		<!-- Кладем в _ULD_01/e[BS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/energyConsumer[MRID='_ULD_01']/e/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='BS1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- EXG_01 Регулярная сеть -->
+
+		<!-- Энергия за интервал времени -->
+		<!-- Используемые purposeKey: TM1H/TM1D/TM1W/TMMO/TM1Y/TMTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _EXG_01/e[TM1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<!-- _EXG_01/e[TM1D] = sum(_EXG_01/e[TM1H]) -->
+		<task>
+			<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='TM1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='TM1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Потребленная из сети мощность -->
+		<!-- Используемые purposeKey: IPMM/IP5M/IP1H/IP1D/IP1W/IPMO/IP1Y/IPTT -->
+		<!-- Выбираем максимум между нулем и телеметрией мощности сети, тем самым выбираем область получения мощности из сети -->
+		<!-- Средние значения за 5 минут/час/день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<task>
+			<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='IPMM']" telemetry="false">
+				<function funcType="max">
+					<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='TMMM']"/>
+					<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+				</function>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Выданная в сеть мощность -->
+		<!-- Используемые purposeKey: OPMM/OP5M/OP1H/OP1D/OP1W/OPMO/OP1Y/OPTT -->
+		<!-- Выбираем максимум между нулем и инвертированной телеметрией мощности сети, тем самым выбираем область выдачи мощности в сеть -->
+		<!-- Средние значения за 5 минут/час/день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<task>
+			<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='OPMM']" telemetry="false">
+				<function funcType="max">
+					<source backupValue="0" coeff="-1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='TMMM']"/>
+					<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+				</function>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Полученная из сети энергия -->
+		<!-- Используемые purposeKey: IP1H/IP1D/IP1W/IPMO/IP1Y/IPTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _EXG_01/e[IP1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='IP1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='IP1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Отданная в сеть энергия -->
+		<!-- Используемые purposeKey: OP1H/OP1D/OP1W/OPMO/OP1Y/OPTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _EXG_01/e[OP1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='OP1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='OP1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Расчет автоматического сценария -->
+		<!-- Мощность, полученная из сети -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Повторяет измерения потребленной из сети активной мощности -->
+		<!-- Кладем в _EXG_01/p[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<task>
+			<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='IP1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Энергия из сети -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Почасовые значения численно равны средней мощности за 1 час -->
+		<!-- Кладем в _PVS_01/e[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='AS1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Стоимость полученной из сети энергии в автоматическом сценарии -->
+		<!-- Используемые purposeKey: AS1H/AS1D/AS1W/ASMO/AS1Y/ASTT -->
+		<!-- Рассчитывается как величина энергии, прокаченной за период, умноженная на стоимость ЭЭ -->
+		<!-- Кладем в _EXG_01/cost[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/cost/addResources/addResource[purposeKey='AS1H']" telemetry="false">
+				<function funcType="multiply">
+					<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='AS1H']"/>
+					<source backupValue="0" coeff="1" path="SystemValue:cfg.gridEnergyPrice"/>
+				</function>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Расчет базового сценария -->
+		<!-- Потребление мощности из сети -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y/BSTT -->
+		<!-- Рассчитывается как разность между нагрузкой и солцнем в базовом сценарии, ограничено снизу нулем -->
+		<!-- Кладем в _EXG_01/p[BS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+				<function funcType="max">
+					<function funcType="sum">
+						<source backupValue="0" coeff="1" path="/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='BS1H']"/>
+						<source backupValue="0" coeff="-1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='BS1H']"/>
+					</function>
+					<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+				</function>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Энергия из сети -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y/BSTT -->
+		<!-- Почасовые значения численно равны средней мощности за 1 час -->
+		<!-- Кладем в _EXG_01/e[AS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/p/addResources/addResource[purposeKey='BS1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Стоимость полученной из сети энергии в автоматическом сценарии -->
+		<!-- Используемые purposeKey: BS1H/BS1D/BS1W/BSMO/BS1Y/BSTT -->
+		<!-- Рассчитывается как величина энергии, прокаченной за период, умноженная на стоимость ЭЭ -->
+		<!-- Кладем в _EXG_01/cost[BS1H] -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/cost/addResources/addResource[purposeKey='BS1H']" telemetry="false">
+				<function funcType="multiply">
+					<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='BS1H']"/>
+					<source backupValue="0" coeff="1" path="SystemValue:cfg.gridEnergyPrice"/>
+				</function>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Расчет разницы между сценариями -->
+		<!-- Экономия ЭЭ из сети -->
+		<!-- Используемые purposeKey: AB1H/AB1D/AB1W/ABMO/AB1Y -->
+		<!-- Кладем в _EXG_01/e[AB1H] -->
+		<!-- Равна разности между потреблением из сети в базовом и автоматическом сценариях -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<!-- На всякий случай ограничиваем снизу нулем -->
+		<task>
+			<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='AB1H']" telemetry="false">
+				<function funcType="max">
+					<function funcType="sum">
+						<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='BS1H']"/>
+						<source backupValue="0" coeff="-1" path="/externalGrid[MRID='_EXG_01']/e/addResources/addResource[purposeKey='AS1H']"/>
+					</function>
+					<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+				</function>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Экономия оплаты ЭЭ из сети -->
+		<!-- Используемые purposeKey: AB1H/AB1D/AB1W/ABMO/AB1Y -->
+		<!-- Кладем в _EXG_01/cost[AB1H] -->
+		<!-- Равна разности между потреблением из сети в базовом и автоматическом сценариях -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<!-- На всякий случай ограничиваем снизу нулем -->
+		<task>
+			<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/cost/addResources/addResource[purposeKey='AB1H']" telemetry="false">
+				<function funcType="max">
+					<function funcType="sum">
+						<source backupValue="0" coeff="1" path="/externalGrid[MRID='_EXG_01']/cost/addResources/addResource[purposeKey='BS1H']"/>
+						<source backupValue="0" coeff="-1" path="/externalGrid[MRID='_EXG_01']/cost/addResources/addResource[purposeKey='AS1H']"/>
+					</function>
+					<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+				</function>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- ESS_01 Накопитель ЛИА -->
+
+		<!-- Мощность заряда накопителя -->
+		<!-- Используемые purposeKey: CHMM/CH1M/CH5M/CH1H/CH1D/CH1W/CHMO/CH1Y/CHTT -->
+		<!-- Кладем в _ESS_01/p/CHMM -->
+		<!-- Рассчитывается как максимум между нулем и телеметрией мощности накопителя * -1, тем самым выбираем область заряда накопителя -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<task>
+			<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_01']/p/addResources/addResource[purposeKey='CHMM']" telemetry="false">
+				<function funcType="max">
+					<source backupValue="0" coeff="-1" path="/energyStoragingUnit[MRID='_ESS_01']/p/addResources/addResource[purposeKey='TMMM']"/>
+					<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+				</function>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Энергия заряда накопителя -->
+		<!-- Используемые purposeKey: CH1H/CH1D/CH1W/CHMO/CH1Y/CHTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _ESS_01/e[CH1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_01']/e/addResources/addResource[purposeKey='CH1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/energyStoragingUnit[MRID='_ESS_01']/p/addResources/addResource[purposeKey='CH1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Мощность разряда накопителя -->
+		<!-- Используемые purposeKey: DCMM/DC1M/DC5M/DC1H/DC1D/DC1W/DCMO/DC1Y/DCTT -->
+		<!-- Кладем в _ESS_01/p/DCMM -->
+		<!-- Рассчитывается как максимум между нулем и телеметрией мощности накопителя * 1, тем самым выбираем область разряда накопителя -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<task>
+			<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_01']/p/addResources/addResource[purposeKey='DCMM']" telemetry="false">
+				<function funcType="max">
+					<source backupValue="0" coeff="1" path="/energyStoragingUnit[MRID='_ESS_01']/p/addResources/addResource[purposeKey='TMMM']"/>
+					<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+				</function>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Энергия разряда накопителя -->
+		<!-- Используемые purposeKey: DC1H/DC1D/DC1W/DCMO/DC1Y/DCTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _ESS_01/e[DC1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_01']/e/addResources/addResource[purposeKey='DC1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/energyStoragingUnit[MRID='_ESS_01']/p/addResources/addResource[purposeKey='DC1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- ESS_02 Накопитель ПРБ -->
+
+		<!-- Мощность заряда накопителя -->
+		<!-- Используемые purposeKey: CHMM/CH1M/CH5M/CH1H/CH1D/CH1W/CHMO/CH1Y/CHTT -->
+		<!-- Кладем в _ESS_02/p/CHMM -->
+		<!-- Рассчитывается как максимум между нулем и телеметрией мощности накопителя * -1, тем самым выбираем область заряда накопителя -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<task>
+			<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_02']/p/addResources/addResource[purposeKey='CHMM']" telemetry="false">
+				<function funcType="max">
+					<source backupValue="0" coeff="-1" path="/energyStoragingUnit[MRID='_ESS_02']/p/addResources/addResource[purposeKey='TMMM']"/>
+					<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+				</function>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Энергия заряда накопителя -->
+		<!-- Используемые purposeKey: CH1H/CH1D/CH1W/CHMO/CH1Y/CHTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _ESS_02/e[CH1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_02']/e/addResources/addResource[purposeKey='CH1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/energyStoragingUnit[MRID='_ESS_02']/p/addResources/addResource[purposeKey='CH1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Мощность разряда накопителя -->
+		<!-- Используемые purposeKey: DCMM/DC1M/DC5M/DC1H/DC1D/DC1W/DCMO/DC1Y/DCTT -->
+		<!-- Кладем в _ESS_02/p/DCMM -->
+		<!-- Рассчитывается как максимум между нулем и телеметрией мощности накопителя * 1, тем самым выбираем область разряда накопителя -->
+		<!-- Значения за день/неделю/месяц/год рассчитываются автоматически через агрегирование mean -->
+		<task>
+			<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_02']/p/addResources/addResource[purposeKey='DCMM']" telemetry="false">
+				<function funcType="max">
+					<source backupValue="0" coeff="1" path="/energyStoragingUnit[MRID='_ESS_02']/p/addResources/addResource[purposeKey='TMMM']"/>
+					<source backupValue="0" coeff="0" path="SystemValue:constants.zero"/>
+				</function>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+
+		<!-- Энергия разряда накопителя -->
+		<!-- Используемые purposeKey: DC1H/DC1D/DC1W/DCMO/DC1Y/DCTT -->
+		<!-- Численно равна мощности за 1 час -->
+		<!-- Кладем в _ESS_02/e[DC1H] -->
+		<!-- Значения за час/неделю/месяц/год рассчитываются автоматически через агрегирование sum -->
+		<task>
+			<pseudoMeasurement target="/energyStoragingUnit[MRID='_ESS_02']/e/addResources/addResource[purposeKey='DC1H']" telemetry="false">
+				<source backupValue="0" coeff="1" path="/energyStoragingUnit[MRID='_ESS_02']/p/addResources/addResource[purposeKey='DC1H']"/>
+			</pseudoMeasurement>
+			<start>P-7D</start>
+			<alignToInterval>true</alignToInterval>
+			<end>PT-2H</end>
+		</task>
+	</tasks>
+	<smartMode>false</smartMode>
+</pluginSettings>
