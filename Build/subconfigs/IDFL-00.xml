@@ -1,0 +1,6 @@
+<pluginSettings>
+	<userDataFile file="csv/users.csv" headerLines="1" delimeter=";">
+		<usersXPath>/userCollection[MRID="_mainUserCollection"]</usersXPath>
+		<rolesXPath>/roleCollection[MRID="_mainRoleCollection"]</rolesXPath>
+	</userDataFile>
+</pluginSettings>
