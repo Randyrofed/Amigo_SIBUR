@@ -1,0 +1,24 @@
+<pluginSettings>
+	<!-- Испытания 1 -->
+	<!-- Загружаем исторический профиль нагрузки - необходим для запроса прогнозов нагрузки -->
+	<!-- Загружаем исторический профиль солнечной генерации - необходим для запроса прогнозов СЭС -->
+	<!-- Загружаем историю работы проточного накопителя - необходим для оптимизации -->
+	<!-- Загружаем  -->
+	<dataFile datePattern="dd.MM.uuuu H:mm" delimeter=";" file="csv/tests/ULD_01/ULD_01_p_TM1H.csv" overwrite="true" telemetry="false" timeStep="PT1H" timeZoneHours="10" update="true">
+		<resourcePath>timestamp</resourcePath>
+		<resourcePath>/energyConsumer[MRID='_ULD_01']/p/addResources/addResource[purposeKey='TM1H']</resourcePath>
+	</dataFile>
+	<dataFile datePattern="dd.MM.uuuu H:mm" delimeter=";" file="csv/tests/PVS_01/PVS_01_p_TM1H.csv" overwrite="true" telemetry="false" timeStep="PT1H" timeZoneHours="10" update="true">
+		<resourcePath>timestamp</resourcePath>
+		<resourcePath>/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='TM1H']</resourcePath>
+	</dataFile>
+	<!-- <dataFile datePattern="dd.MM.uuuu H:mm" delimeter=";" file="csv/tests/PVS_01/PVS_01_cost_FL24.csv" overwrite="true" telemetry="false" timeStep="PT1H" timeZoneHours="10" update="true">
+		<resourcePath>timestamp</resourcePath>
+		<resourcePath>/generatingUnit[MRID='_PVS_01']/cost/addResources/addResource[purposeKey='FL24']</resourcePath>
+	</dataFile> -->
+	<energyProviderTariff resourcePath="/energyProvider[MRID='_EPC_01']/tariffs">
+		<tariffDataFile datePattern="dd.MM.uuuu H:mm" delimeter=";" dropCollection="true" file="csv/tests/EPC_01/EPC_01_costs_limitPriceEnergy.csv" headerLines="1" priceCategory="1" scaleFactor="1" tariffParameter="limitPriceEnergy" taskMode="FACT" timeZoneHours="10">
+			<addResource>/energyProvider[MRID='_EPC_01']/costs/addResources/addResource[purposeKey='LIMIT_PRICE_ENERGY']</addResource>
+		</tariffDataFile>
+	</energyProviderTariff>
+</pluginSettings>
