@@ -1,0 +1,40 @@
+<pluginSettings>
+	<!-- Запрос на обучение -->
+	<!-- Более не используется после перехода на прогнозер на основе clear sky профиля <connection operationName="CLTM">
+		<http connectingTimeout="PT30M" method="POST">
+			<url>http://192.168.10.111:8089/train_model_solar</url>
+		</http>
+		<loader>
+			<resource>/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='TM1H']</resource>
+			<startDate>P-12M</startDate>
+			<endDate>P-1D</endDate>
+		</loader>
+		<processingClass>ru.rtsoft.amigo.cloud.forecaster.ForecastServicePlugin</processingClass>
+		<customConfig client_id="solar-1" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='FL24']" start="PT1H"/>
+	</connection> -->
+	
+	<!-- Запрос на прогноз -->
+	<connection operationName="CLFC">
+		<http connectingTimeout="PT2M" method="POST">
+			<url>https://gao-dev.rnd.rtsoft.ru/forecast_model_solar</url>
+		</http>
+		<loader>
+			<resource>/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='TM1H']</resource>
+			<startDate>P-3D</startDate>
+			<endDate>PT-1M</endDate>
+		</loader>
+		<processingClass>ru.rtsoft.amigo.cloud.forecaster.ForecastServicePlugin</processingClass>
+		<customConfig client_id="russian-island" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='FL24']" start="PT1H"/>
+	</connection>
+
+	<!-- Запрос ошибки прогнозирования -->
+	<connection operationName="CLFE">
+		<http method="POST">
+			<url>https://gao-dev.rnd.rtsoft.ru/error_metrics/</url>
+		</http>
+		<processingClass>ru.rtsoft.amigo.cloud.statistics.StatisticsServicePlugin</processingClass>
+		<customConfig align="true" archivePath="/generatingUnit[MRID='_PVS_01']/p/archives/archive[purposeKey='FL24']" deleteOld="true" end="now" resourcePath="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='TM1H']" start="P-1D" timeResolution="PT1H">
+			<result param="rrmse" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='ER1D']"/>
+		</customConfig>
+	</connection>
+</pluginSettings>
