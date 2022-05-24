@@ -1,0 +1,11 @@
+<pluginSettings>
+	<forecastShift>0</forecastShift>
+	<forecastStorage>csv/forecasts</forecastStorage>
+	<mode>normal</mode>
+	<mappings>
+		<!-- Загрузка прогнозов цен солнца -->
+		<mapping xpath="/generatingUnit[MRID='_PVS_01']/cost" fileName="/_PVS_01_cost_FL24.csv" type="simple" dataResolution="PT1H"/>
+		<!-- Загрузка прогнозов цен покупки из сети -->
+		<!-- <mapping xpath="/energyProvider[MRID='_EPC_01']/costs/addResources/addResource[purposeKey='LIMIT_PRICE_ENERGY']" fileName="/_EPC_01_costs_LIMIT_PRICE_ENERGY.csv" scaleXPath="SystemValue:cfg.gridEnergyPrice" type="simple" dataResolution="PT1H"/> -->
+	</mappings>
+</pluginSettings>
