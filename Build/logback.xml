@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+	<appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>WARN</level>
+		</filter>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %logger{50} %X{akkaSource} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="ConsoleFile">
+		<file>logs/AmigoConsole/AmigoConsole.log</file>
+		<append>false</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/AmigoConsole/AmigoConsole.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>16</maxHistory>
+			<totalSizeCap>256MB</totalSizeCap>
+			<maxFileSize>16MB</maxFileSize>
+			<cleanHistoryOnStart>true</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %logger{50} %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RepoFile">
+		<file>logs/Repo/Repo.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/Repo/Repo.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>16</maxHistory>
+			<totalSizeCap>256MB</totalSizeCap>
+			<maxFileSize>16MB</maxFileSize>
+			<cleanHistoryOnStart>true</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %logger{50} %X{akkaSource} %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="EventManagerFile">
+		<file>logs/EventManager/EventManager.log</file>
+		<append>false</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/EventManager/EventManager.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>16</maxHistory>
+			<totalSizeCap>256MB</totalSizeCap>
+			<maxFileSize>16MB</maxFileSize>
+			<cleanHistoryOnStart>true</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="ALOGFile">
+		<file>logs/ALOG/ALOG.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/ALOG/ALOG.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>16</maxHistory>
+			<totalSizeCap>256MB</totalSizeCap>
+			<maxFileSize>16MB</maxFileSize>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %logger{50} %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="ARCLFile">
+		<file>logs/ARCL/ARCL.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/ARCL/ARCL.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>16</maxHistory>
+			<totalSizeCap>256MB</totalSizeCap>
+			<maxFileSize>16MB</maxFileSize>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %logger{50} %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="CBERFile">
+		<file>logs/CBER/CBER.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/CBER/CBER.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>16</maxHistory>
+			<totalSizeCap>256MB</totalSizeCap>
+			<maxFileSize>16MB</maxFileSize>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %logger{50} %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="FLSTFile">
+		<file>logs/FLST/FLST.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/FLST/FLST.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>16</maxHistory>
+			<totalSizeCap>256MB</totalSizeCap>
+			<maxFileSize>16MB</maxFileSize>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %logger{50} %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="IDFLFile">
+		<file>logs/IDFL/IDFL.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/IDFL/IDFL.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>16</maxHistory>
+			<totalSizeCap>256MB</totalSizeCap>
+			<maxFileSize>16MB</maxFileSize>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %logger{50} %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="IHTCFile">
+		<file>logs/IHTC/IHTC.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/IHTC/IHTC.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>16</maxHistory>
+			<totalSizeCap>256MB</totalSizeCap>
+			<maxFileSize>16MB</maxFileSize>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %logger{50} %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="IHTSFile">
+		<file>logs/IHTS/IHTS.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/IHTS/IHTS.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>16</maxHistory>
+			<totalSizeCap>256MB</totalSizeCap>
+			<maxFileSize>16MB</maxFileSize>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %logger{50} %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="IMDBFile">
+		<file>logs/IMDB/IMDB.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/IMDB/IMDB.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>16</maxHistory>
+			<totalSizeCap>256MB</totalSizeCap>
+			<maxFileSize>16MB</maxFileSize>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %logger{50} %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="OMODFile">
+		<file>logs/OMOD/OMOD.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/OMOD/OMOD.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>16</maxHistory>
+			<totalSizeCap>256MB</totalSizeCap>
+			<maxFileSize>16MB</maxFileSize>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %logger{50} %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="SCLKFile">
+		<file>logs/SCLK/SCLK.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/SCLK/SCLK.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>16</maxHistory>
+			<totalSizeCap>256MB</totalSizeCap>
+			<maxFileSize>16MB</maxFileSize>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %logger{50} %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="SSSWFile">
+		<file>logs/SSSW/SSSW.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/SSSW/SSSW.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>16</maxHistory>
+			<totalSizeCap>256MB</totalSizeCap>
+			<maxFileSize>16MB</maxFileSize>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date %-5level %logger{50} %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNCConsole">
+		<appender-ref ref="ConsoleFile"/>
+	</appender>
+	<appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNCEventManager">
+		<appender-ref ref="EventManagerFile"/>
+	</appender>
+	<appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNCRepo">
+		<appender-ref ref="RepoFile"/>
+	</appender>
+
+	<appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNCALOG">
+		<appender-ref ref="ALOGFile"/>
+	</appender>
+	<appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNCARCL">
+		<appender-ref ref="ARCLFile"/>
+	</appender>
+	<appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNCCBER">
+		<appender-ref ref="CBERFile"/>
+	</appender>
+	<appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNCFLST">
+		<appender-ref ref="FLSTFile"/>
+	</appender>
+	<appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNCIDFL">
+		<appender-ref ref="IDFLFile"/>
+	</appender>
+	<appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNCIHTC">
+		<appender-ref ref="IHTCFile"/>
+	</appender>
+	<appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNCIHTS">
+		<appender-ref ref="IHTSFile"/>
+	</appender>
+	<appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNCIMDB">
+		<appender-ref ref="IMDBFile"/>
+	</appender>
+	<appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNCOMOD">
+		<appender-ref ref="OMODFile"/>
+	</appender>
+	<appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNCSCLK">
+		<appender-ref ref="SCLKFile"/>
+	</appender>
+	<appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNCSSSW">
+		<appender-ref ref="SSSWFile"/>
+	</appender>
+
+	<logger additivity="false" level="info" name="ru.rtsoft.amigo.eventmanager">
+		<appender-ref ref="EventManagerFile"/>
+	</logger>
+	<logger additivity="false" level="info" name="ru.rtsoft.amigo.repository">
+		<appender-ref ref="ASYNCRepo"/>
+	</logger>
+	
+	<logger additivity="false" level="debug" name="ru.rtsoft.amigo.alog">
+		<appender-ref ref="ALOGFile"/>
+	</logger>
+	<logger additivity="false" level="debug" name="ru.rtsoft.amigo.arcl">
+		<appender-ref ref="ARCLFile"/>
+	</logger>
+	<logger additivity="false" level="debug" name="ru.rtsoft.amigo.cber">
+		<appender-ref ref="CBERFile"/>
+	</logger>
+	<logger additivity="false" level="info" name="ru.rtsoft.amigo.flst">
+		<appender-ref ref="FLSTFile"/>
+	</logger>
+	<logger additivity="false" level="debug" name="ru.rtsoft.amigo.idfl">
+		<appender-ref ref="IDFLFile"/>
+	</logger>
+	<logger additivity="false" level="debug" name="ru.rtsoft.amigo.ihtc">
+		<appender-ref ref="IHTCFile"/>
+	</logger>
+	<logger additivity="false" level="debug" name="ru.rtsoft.amigo.cloud.forecaster.GenericForecaster">
+		<appender-ref ref="IHTCFile"/>
+	</logger>
+	<logger additivity="false" level="debug" name="ru.rtsoft.amigo.cloud_optimizer">
+		<appender-ref ref="IHTCFile"/>
+	</logger>
+	<logger additivity="false" level="debug" name="ru.rtsoft.amigo.cloud.statistics">
+		<appender-ref ref="IHTCFile"/>
+	</logger>
+	<logger additivity="false" level="info" name="ru.rtsoft.amigo.ihts">
+		<appender-ref ref="IHTSFile"/>
+	</logger>
+	<logger additivity="false" level="debug" name="ru.rtsoft.amigo.imdb">
+		<appender-ref ref="IMDBFile"/>
+	</logger>
+	<logger additivity="false" level="debug" name="ru.rtsoft.amigo.omod">
+		<appender-ref ref="OMODFile"/>
+	</logger>
+	<logger additivity="false" level="debug" name="ru.rtsoft.amigo.sclk">
+		<appender-ref ref="SCLKFile"/>
+	</logger>
+	<logger additivity="false" level="debug" name="ru.rtsoft.amigo.sssw">
+		<appender-ref ref="SSSWFile"/>
+	</logger>
+	<root level="warn">
+		<!-- <appender-ref ref="STDOUT" />-->
+		<appender-ref ref="ASYNCConsole"/>
+	</root>
+</configuration>
