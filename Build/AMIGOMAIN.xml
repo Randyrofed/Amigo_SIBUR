@@ -167,41 +167,6 @@
 			</m:addResources>
 			<m:value>5</m:value>
 		</m:maxPOUT>
-		<m:maxQIN controlable="true" isExecMonitored="true" mRID="_EXG_01_maxQIN">
-			<m:addResources>
-				<!-- Телеметрия -->
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_EXG_01_maxQIN_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
-			</m:addResources>
-			<m:value>30</m:value>
-		</m:maxQIN>
-		<m:maxQOUT controlable="true" isExecMonitored="true" mRID="_EXG_01_maxQOUT">
-			<m:addResources>
-				<!-- Телеметрия -->
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_EXG_01_maxQOUT_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
-			</m:addResources>
-			<m:value>5</m:value>
-		</m:maxQOUT>
-		<m:maxEIN controlable="true" isExecMonitored="true" mRID="_EXG_01_maxEIN">
-			<m:addResources>
-				<!-- Телеметрия -->
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_EXG_01_maxEIN_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
-			</m:addResources>
-			<m:value>30</m:value>
-		</m:maxEIN>
-		<m:maxEOUT controlable="true" isExecMonitored="true" mRID="_EXG_01_maxEOUT">
-			<m:addResources>
-				<!-- Телеметрия -->
-				<m:addResource aggregateMode="mean" interpolMode="step" mRID="_EXG_01_maxEOUT_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
-			</m:addResources>
-			<m:value>5</m:value>
-		</m:maxEOUT>
-		<m:maxTgF controlable="true" isExecMonitored="true" mRID="_EXG_01_maxTgF">
-			<m:addResources>
-				<!-- Телеметрия -->
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_EXG_01_maxTgF_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
-			</m:addResources>
-			<m:value>0.1</m:value>
-		</m:maxTgF>
 		<m:currentPriceCategory controlable="true" isExecMonitored="true" mRID="_EXG_01_currentPriceCategory">
 			<m:addResources>
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_EXG_01_currentPriceCategory_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
@@ -323,41 +288,6 @@
 			</m:addResources>
 			<m:value>5</m:value>
 		</m:maxPOUT>
-		<m:maxQIN controlable="true" isExecMonitored="true" mRID="_EXG_02_maxQIN">
-			<m:addResources>
-				<!-- Телеметрия -->
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_EXG_02_maxQIN_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
-			</m:addResources>
-			<m:value>30</m:value>
-		</m:maxQIN>
-		<m:maxQOUT controlable="true" isExecMonitored="true" mRID="_EXG_02_maxQOUT">
-			<m:addResources>
-				<!-- Телеметрия -->
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_EXG_02_maxQOUT_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
-			</m:addResources>
-			<m:value>5</m:value>
-		</m:maxQOUT>
-		<m:maxEIN controlable="true" isExecMonitored="true" mRID="_EXG_02_maxEIN">
-			<m:addResources>
-				<!-- Телеметрия -->
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_EXG_02_maxEIN_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
-			</m:addResources>
-			<m:value>30</m:value>
-		</m:maxEIN>
-		<m:maxEOUT controlable="true" isExecMonitored="true" mRID="_EXG_02_maxEOUT">
-			<m:addResources>
-				<!-- Телеметрия -->
-				<m:addResource aggregateMode="mean" interpolMode="step" mRID="_EXG_02_maxEOUT_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
-			</m:addResources>
-			<m:value>5</m:value>
-		</m:maxEOUT>
-		<m:maxTgF controlable="true" isExecMonitored="true" mRID="_EXG_02_maxTgF">
-			<m:addResources>
-				<!-- Телеметрия -->
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_EXG_02_maxTgF_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
-			</m:addResources>
-			<m:value>0.1</m:value>
-		</m:maxTgF>
 		<m:currentPriceCategory controlable="true" isExecMonitored="true" mRID="_EXG_02_currentPriceCategory">
 			<m:addResources>
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_EXG_02_currentPriceCategory_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
@@ -456,8 +386,7 @@
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_EXG_Sum_e_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_EXG_Sum_e_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_EXG_Sum_e_TM5M" maxUniqueEntries="210240" purposeKey="TM5M" source="TM1M" timeResolution="PT5M"/>
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_EXG_Sum_e_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="last" interpolMode="step" mRID="_EXG_Sum_e_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_EXG_Sum_e_TM1D" maxUniqueEntries="1825" purposeKey="TM1D" source="TM1H" timeResolution="P1D"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_EXG_Sum_e_TM1W" maxUniqueEntries="260" purposeKey="TM1W" source="TM1D" timeResolution="P1W"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_EXG_Sum_e_T1MO" maxUniqueEntries="120" purposeKey="T1MO" source="TM1W" timeResolution="P1M"/>
@@ -546,8 +475,7 @@
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_EXG_Sum_f_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_EXG_Sum_f_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_EXG_Sum_f_TM5M" maxUniqueEntries="210240" purposeKey="TM5M" source="TM1M" timeResolution="PT5M"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_EXG_Sum_f_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="last" interpolMode="none" mRID="_EXG_Sum_f_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 			</m:addResources>
 			<m:value>50</m:value>
 		</m:f>
@@ -646,7 +574,7 @@
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ULD_01_p_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_ULD_01_p_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true"  interpolMode="none" mRID="_ULD_01_p_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true"  interpolMode="none" mRID="_ULD_01_p_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_ULD_01_p_TM1D" maxUniqueEntries="1825" purposeKey="TM1D" source="TM1H" timeResolution="P1D"/>
 				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_ULD_01_p_TM1W" maxUniqueEntries="260" purposeKey="TM1W" source="TM1D" timeResolution="P1W"/>
 				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_ULD_01_p_T1MO" maxUniqueEntries="120" purposeKey="T1MO" source="TM1W" timeResolution="P1M"/>
@@ -684,8 +612,7 @@
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ULD_01_operMode_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ULD_01_operMode_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ULD_01_operMode_TM5M" maxUniqueEntries="210240" purposeKey="TM5M" source="TM1M" timeResolution="PT5M"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ULD_01_operMode_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ULD_01_operMode_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 			</m:addResources>
 			<m:value>OFF</m:value>
 		</m:operMode>
@@ -695,8 +622,7 @@
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ULD_01_e_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<!-- На случай наличия живой телеметрии <m:addResource aggregateMode="last" interpolMode="step" mRID="_ULD_01_e_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ULD_01_e_TM5M" maxUniqueEntries="210240" purposeKey="TM5M" source="TM1M" timeResolution="PT5M"/>
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ULD_01_e_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ULD_01_e_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ULD_01_e_TM1D" maxUniqueEntries="1825" purposeKey="TM1D" source="TM1H" timeResolution="P1D"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ULD_01_e_TM1W" maxUniqueEntries="260" purposeKey="TM1W" source="TM1D" timeResolution="P1W"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ULD_01_e_T1MO" maxUniqueEntries="120" purposeKey="T1MO" source="TM1W" timeResolution="P1M"/>
@@ -746,8 +672,7 @@
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ESS_01_p_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_ESS_01_p_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_ESS_01_p_TM5M" maxUniqueEntries="210240" purposeKey="TM5M" source="TM1M" timeResolution="PT5M"/>
-				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_ESS_01_p_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_ESS_01_p_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_ESS_01_p_TM1D" maxUniqueEntries="1825" purposeKey="TM1D" source="TM1H" timeResolution="P1D"/>
 				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_ESS_01_p_TM1W" maxUniqueEntries="260" purposeKey="TM1W" source="TM1D" timeResolution="P1W"/>
 				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_ESS_01_p_T1MO" maxUniqueEntries="120" purposeKey="T1MO" source="TM1W" timeResolution="P1M"/>
@@ -784,8 +709,7 @@
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ESS_01_q_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_ESS_01_q_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_ESS_01_q_TM5M" maxUniqueEntries="210240" purposeKey="TM5M" source="TM1M" timeResolution="PT5M"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_ESS_01_q_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_ESS_01_q_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_ESS_01_q_TM1D" maxUniqueEntries="1825" purposeKey="TM1D" source="TM1H" timeResolution="P1D"/>
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_ESS_01_q_TM1W" maxUniqueEntries="260" purposeKey="TM1W" source="TM1D" timeResolution="P1W"/>
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_ESS_01_q_T1MO" maxUniqueEntries="120" purposeKey="T1MO" source="TM1W" timeResolution="P1M"/>
@@ -799,8 +723,7 @@
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ESS_01_operMode_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ESS_01_operMode_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ESS_01_operMode_TM5M" maxUniqueEntries="210240" purposeKey="TM5M" source="TM1M" timeResolution="PT5M"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ESS_01_operMode_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ESS_01_operMode_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 				<!-- Оптимизация -->
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ESS_01_operMode_OPPF" maxUniqueEntries="1" purposeKey="OPPF" timeResolution="PT1M"/>
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ESS_01_operMode_OUCP" maxUniqueEntries="24" purposeKey="OUCP" timeResolution="PT1H"/>
@@ -813,8 +736,7 @@
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ESS_01_e_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ESS_01_e_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ESS_01_e_TM5M" maxUniqueEntries="210240" purposeKey="TM5M" source="TM1M" timeResolution="PT5M"/>
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ESS_01_e_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ESS_01_e_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ESS_01_e_TM1D" maxUniqueEntries="1825" purposeKey="TM1D" source="TM1H" timeResolution="P1D"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ESS_01_e_TM1W" maxUniqueEntries="260" purposeKey="TM1W" source="TM1D" timeResolution="P1W"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ESS_01_e_T1MO" maxUniqueEntries="120" purposeKey="T1MO" source="TM1W" timeResolution="P1M"/>
@@ -850,8 +772,7 @@
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ESS_01_batteryVoltage_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_ESS_01_batteryVoltage_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_ESS_01_batteryVoltage_TM5M" maxUniqueEntries="210240" purposeKey="TM5M" source="TM1M" timeResolution="PT5M"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_ESS_01_batteryVoltage_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_ESS_01_batteryVoltage_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 			</m:addResources>
 			<m:value>48</m:value>
 		</m:batteryVoltage>
@@ -861,8 +782,7 @@
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ESS_01_chargeNumber_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ESS_01_chargeNumber_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ESS_01_chargeNumber_TM5M" maxUniqueEntries="210240" purposeKey="TM5M" source="TM1M" timeResolution="PT5M"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ESS_01_chargeNumber_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="last" interpolMode="none" mRID="_ESS_01_chargeNumber_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ESS_01_chargeNumber_TM1D" maxUniqueEntries="1825" purposeKey="TM1D" source="TM1H" timeResolution="P1D"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ESS_01_chargeNumber_TM1W" maxUniqueEntries="260" purposeKey="TM1W" source="TM1D" timeResolution="P1W"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_ESS_01_chargeNumber_T1MO" maxUniqueEntries="120" purposeKey="T1MO" source="TM1W" timeResolution="P1M"/>
@@ -910,55 +830,49 @@
 	<m:generatingUnit mRID="_PVS_01" minOperTime="1" name="PVS 01 - Солнечная электростанция на шине BUS 01">
 		<m:inService controlable="true" isExecMonitored="true" mRID="_PVS_01_inService">
 			<m:addResources>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_inService_TMMM" maxUniqueEntries="2592000" purposeKey="TMMM" timeResolution="PT1S"/>
+				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_inService_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 			</m:addResources>
 			<m:value>ON</m:value>
 		</m:inService>
 		<m:sysControlEnabled controlable="true" isExecMonitored="true" mRID="_PVS_01_sysControlEnabled">
 			<m:addResources>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_sysControlEnabled_TMMM" maxUniqueEntries="2592000" purposeKey="TMMM" timeResolution="PT1S"/>
+				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_sysControlEnabled_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 			</m:addResources>
 			<m:value>ON</m:value>
 		</m:sysControlEnabled>
 		<m:usrControlEnabled controlable="true" isExecMonitored="true" mRID="_PVS_01_usrControlEnabled">
 			<m:addResources>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_usrControlEnabled_TMMM" maxUniqueEntries="2592000" purposeKey="TMMM" timeResolution="PT1S"/>
+				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_usrControlEnabled_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 			</m:addResources>
 			<m:value>ON</m:value>
 		</m:usrControlEnabled>
 		<m:connection controlable="true" isExecMonitored="true" mRID="_PVS_01_connection">
 			<m:addResources>
-				<m:addResource aggregateMode="last" desc="СЭС 1" interpolMode="none" mRID="_PVS_01_connection_TMMM" maxUniqueEntries="2592000" purposeKey="TMMM" timeResolution="PT1S"/>
+				<m:addResource aggregateMode="last" desc="СЭС 1" interpolMode="none" mRID="_PVS_01_connection_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 			</m:addResources>
 			<m:value>OFF</m:value>
 		</m:connection>
 		<m:p controlable="true" isExecMonitored="true" mRID="_PVS_01_p">
 			<m:addResources>
 				<!-- Телеметрия -->
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_p_TMMM" maxUniqueEntries="2592000" purposeKey="TMMM" timeResolution="PT1S"/>
+				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_p_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_TM1D" maxUniqueEntries="1825" purposeKey="TM1D" source="TM1H" timeResolution="P1D"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_TM1W" maxUniqueEntries="260" purposeKey="TM1W" source="TM1D" timeResolution="P1W"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_T1MO" maxUniqueEntries="120" purposeKey="T1MO" source="TM1W" timeResolution="P1M"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_TM1Y" maxUniqueEntries="60" purposeKey="TM1Y" source="T1MO" timeResolution="P1Y"/>
-				<!-- UI -->
-				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_p_UI1H" maxUniqueEntries="87600" purposeKey="UI1H" source="TM1M" timeResolution="PT1H"/>
-				<!-- Оптимизация -->
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_p_OPPF" maxUniqueEntries="1" purposeKey="OPPF" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_p_OUCP" maxUniqueEntries="24" purposeKey="OUCP" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_p_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_p_TM1D" maxUniqueEntries="1825" purposeKey="TM1D" source="TM1H" timeResolution="P1D"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_p_TM1W" maxUniqueEntries="260" purposeKey="TM1W" source="TM1D" timeResolution="P1W"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_p_T1MO" maxUniqueEntries="120" purposeKey="T1MO" source="TM1W" timeResolution="P1M"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_p_TM1Y" maxUniqueEntries="60" purposeKey="TM1Y" source="T1MO" timeResolution="P1Y"/>
 				<!-- Прогноз -->
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_p_FL15" maxUniqueEntries="15" purposeKey="FL15" timeResolution="PT1M"/>
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_p_FL24" maxUniqueEntries="24" purposeKey="FL24" timeResolution="PT1H"/>
 				<m:addResource aggregateMode="last" earlyTelemetryAggregation="true" interpolMode="line" mRID="_PVS_01_p_FL05" maxUniqueEntries="288" purposeKey="FL05" source="FL24" timeResolution="PT5M"/>
-				<!-- METRICS: мощность нагрузки в автоматическом сценарии -->
+				<!-- METRICS: мощность станции в автоматическом сценарии -->
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_p_AS1H" maxUniqueEntries="87600" purposeKey="AS1H" timeResolution="PT1H"/>
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_AS1D" maxUniqueEntries="1825" purposeKey="AS1D" source="AS1H" timeResolution="P1D"/>
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_AS1W" maxUniqueEntries="260" purposeKey="AS1W" source="AS1D" timeResolution="P1W"/>
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_ASMO" maxUniqueEntries="120" purposeKey="ASMO" source="AS1W" timeResolution="P1M"/>
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_AS1Y" maxUniqueEntries="60" purposeKey="AS1Y" source="ASMO" timeResolution="P1Y"/>
-				<!-- METRICS: мощность нагрузки в базовом сценарии -->
+				<!-- METRICS: мощность станции в базовом сценарии -->
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_p_BS1H" maxUniqueEntries="87600" purposeKey="BS1H" timeResolution="PT1H"/>
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_BS1D" maxUniqueEntries="1825" purposeKey="BS1D" source="BS1H" timeResolution="P1D"/>
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_BS1W" maxUniqueEntries="260" purposeKey="BS1W" source="BS1D" timeResolution="P1W"/>
@@ -969,15 +883,6 @@
 				<m:addResource aggregateMode="max" interpolMode="none" mRID="_PVS_01_p_MX1W" maxUniqueEntries="260" purposeKey="MX1W" source="MX1D" timeResolution="P1W"/>
 				<m:addResource aggregateMode="max" interpolMode="none" mRID="_PVS_01_p_MXMO" maxUniqueEntries="120" purposeKey="MXMO" source="MX1W" timeResolution="P1M"/>
 				<m:addResource aggregateMode="max" interpolMode="none" mRID="_PVS_01_p_MX1Y" maxUniqueEntries="60" purposeKey="MX1Y" source="MXMO" timeResolution="P1Y"/>
-				<!-- METRICS: ошибка прогнозирования -->
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_p_ER1D" maxUniqueEntries="1825" purposeKey="ER1D" timeResolution="P1D"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_ER1W" maxUniqueEntries="260" purposeKey="ER1W" source="ER1D" timeResolution="P1W"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_ERMO" maxUniqueEntries="120" purposeKey="ERMO" source="ER1W" timeResolution="P1M"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_ER1Y" maxUniqueEntries="60" purposeKey="ER1Y" source="ERMO" timeResolution="P1Y"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_p_ERTT" maxUniqueEntries="1" purposeKey="ERTT" source="ER1D" timeResolution="P10Y"/>
-				<!-- METRICS: потенциальная выработка СЭС -->
-				<!-- <m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_p_PS1H" maxUniqueEntries="87600" purposeKey="PS1H" timeResolution="PT1H"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_p_PL24" maxUniqueEntries="24" purposeKey="PL24" timeResolution="PT1H"/> -->
 			</m:addResources>
 			<m:archives>
 				<m:archive arSource="TM1H" mRID="_PVS_01_p_ARCH_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" timeResolution="PT1H"/>
@@ -988,11 +893,10 @@
 		<m:q controlable="false" isExecMonitored="false" mRID="_PVS_01_q">
 			<m:addResources>
 				<!-- Телеметрия -->
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_q_TMMM" maxUniqueEntries="2592000" purposeKey="TMMM" timeResolution="PT1S"/>
+				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_q_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_q_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_q_TM5M" maxUniqueEntries="210240" purposeKey="TM5M" source="TM1M" timeResolution="PT5M"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_q_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_q_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_q_TM1D" maxUniqueEntries="1825" purposeKey="TM1D" source="TM1H" timeResolution="P1D"/>
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_q_TM1W" maxUniqueEntries="260" purposeKey="TM1W" source="TM1D" timeResolution="P1W"/>
 				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_q_T1MO" maxUniqueEntries="120" purposeKey="T1MO" source="TM1W" timeResolution="P1M"/>
@@ -1003,18 +907,12 @@
 		<m:operMode controlable="true" isExecMonitored="true" mRID="_PVS_01_operMode">
 			<m:addResources>
 				<!-- Телеметрия -->
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_operMode_TMMM" maxUniqueEntries="2592000" purposeKey="TMMM" timeResolution="PT1S"/>
+				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_operMode_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_operMode_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_operMode_TM5M" maxUniqueEntries="210240" purposeKey="TM5M" source="TM1M" timeResolution="PT5M"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_operMode_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_operMode_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 				<!-- Прогноз -->
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_operMode_FL15" maxUniqueEntries="15" purposeKey="FL15" timeResolution="PT1M"/>
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_operMode_FL24" maxUniqueEntries="24" purposeKey="FL24" timeResolution="PT15M"/>
-				<!-- Оптимизация -->
-				<!-- TODO: возможно не требуется -->
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_operMode_OPPF" maxUniqueEntries="1" purposeKey="OPPF" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_operMode_OUCP" maxUniqueEntries="24" purposeKey="OUCP" timeResolution="PT1H"/>
 			</m:addResources>
 			<m:value>ON</m:value>
 			<m:costInfo OFFONTransitionCost="10" OFFStateCost="10" ONOFFTransitionCost="0" ONStateCost="0"/>
@@ -1022,11 +920,10 @@
 		<m:e controlable="true" isExecMonitored="true" mRID="_PVS_01_e">
 			<m:addResources>
 				<!-- Телеметрия -->
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_e_TMMM" maxUniqueEntries="2592000" purposeKey="TMMM" timeResolution="PT1S"/>
+				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_e_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация -->
 				<!-- На случай наличия живой телеметрии <m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_e_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_e_TM5M" maxUniqueEntries="210240" purposeKey="TM5M" source="TM1M" timeResolution="PT5M"/>
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_e_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM5M" timeResolution="PT1H"/>
+				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_e_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_e_TM1D" maxUniqueEntries="1825" purposeKey="TM1D" source="TM1H" timeResolution="P1D"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_e_TM1W" maxUniqueEntries="260" purposeKey="TM1W" source="TM1D" timeResolution="P1W"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_e_T1MO" maxUniqueEntries="120" purposeKey="T1MO" source="TM1W" timeResolution="P1M"/>
@@ -1060,64 +957,58 @@
 				<m:addResource aggregateMode="sum" interpolMode="none" mRID="_PVS_01_e_ABMO" maxUniqueEntries="120" purposeKey="ABMO" source="AB1W" timeResolution="P1M"/>
 				<m:addResource aggregateMode="sum" interpolMode="none" mRID="_PVS_01_e_AB1Y" maxUniqueEntries="60" purposeKey="AB1Y" source="ABMO" timeResolution="P1Y"/>
 				<m:addResource aggregateMode="cumulative" interpolMode="none" mRID="_PVS_01_e_ABTT" maxUniqueEntries="1" purposeKey="ABTT" source="AB1D" timeResolution="P1D"/>
-				<!-- METRICS: неиспользованная энергия -->
-				<!-- <m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_e_US1H" maxUniqueEntries="87600" purposeKey="US1H" timeResolution="PT1H"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_e_US1D" maxUniqueEntries="1825" purposeKey="US1D" source="US1H" timeResolution="P1D"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_e_US1W" maxUniqueEntries="260" purposeKey="US1W" source="US1D" timeResolution="P1W"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_e_USMO" maxUniqueEntries="120" purposeKey="USMO" source="US1D" timeResolution="P1M"/>
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_e_US1Y" maxUniqueEntries="60" purposeKey="US1Y" source="USMO" timeResolution="P1Y"/> -->
 			</m:addResources>
 			<m:value>0</m:value>
 		</m:e>
 		<m:cost controlable="true" isExecMonitored="true"  mRID="_PVS_01_cost">
 			<m:addResources>
 				<!-- Телеметрия, для нужд оптимизации -->
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_cost_TMMM" maxUniqueEntries="2592000" purposeKey="TMMM" timeResolution="PT1S"/>
+				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_cost_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- Агрегация, для нужд оптимизации -->
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_cost_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
+				<!-- <m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_cost_TM1M" maxUniqueEntries="525600" purposeKey="TM1M" source="TMMM" timeResolution="PT1M"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_cost_TM1H" maxUniqueEntries="87600" purposeKey="TM1H" source="TM1M" timeResolution="PT1H"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_cost_TM1D" maxUniqueEntries="1825" purposeKey="TM1D" source="TM1H" timeResolution="P1D"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_cost_TM1W" maxUniqueEntries="260" purposeKey="TM1W" source="TM1D" timeResolution="P1W"/>
 				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_cost_T1MO" maxUniqueEntries="120" purposeKey="T1MO" source="TM1W" timeResolution="P1M"/>
-				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_cost_TM1Y" maxUniqueEntries="60" purposeKey="TM1Y" source="T1MO" timeResolution="P1Y"/>
+				<m:addResource aggregateMode="last" interpolMode="step" mRID="_PVS_01_cost_TM1Y" maxUniqueEntries="60" purposeKey="TM1Y" source="T1MO" timeResolution="P1Y"/> -->
 				<!-- Прогноз -->
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_cost_FL15" maxUniqueEntries="15" purposeKey="FL15" timeResolution="PT1M"/>
+				<!-- <m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_cost_FL15" maxUniqueEntries="15" purposeKey="FL15" timeResolution="PT1M"/>
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_cost_FL24" maxUniqueEntries="24" purposeKey="FL24" timeResolution="PT1H"/>
-				<m:addResource aggregateMode="last" earlyTelemetryAggregation="true" interpolMode="line" mRID="_PVS_01_cost_FL05" maxUniqueEntries="288" purposeKey="FL05" source="FL24" timeResolution="PT5M"/>
+				<m:addResource aggregateMode="last" earlyTelemetryAggregation="true" interpolMode="line" mRID="_PVS_01_cost_FL05" maxUniqueEntries="288" purposeKey="FL05" source="FL24" timeResolution="PT5M"/> -->
 			</m:addResources>
 			<m:value>0</m:value>
 		</m:cost>
 		<m:workingTime controlable="false" isExecMonitored="false" mRID="_PVS_01_workingTime">
 			<m:addResources>
 				<!-- Телеметрия -->
-				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_workingTime_TMMM" maxUniqueEntries="2592000" purposeKey="TMMM" timeResolution="PT1S"/>
+				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_workingTime_TMMM" maxUniqueEntries="604800" purposeKey="TMMM" timeResolution="PT1S"/>
 				<!-- METRICS: КИУМ в автоматическом сценарии -->
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_workingTime_AS1H" maxUniqueEntries="87600" purposeKey="AS1H" timeResolution="PT1H"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_workingTime_AS1D" maxUniqueEntries="1825" purposeKey="AS1D" source="AS1H" timeResolution="P1D"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_workingTime_AS1W" maxUniqueEntries="260" purposeKey="AS1W" source="AS1D" timeResolution="P1W"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_workingTime_ASMO" maxUniqueEntries="120" purposeKey="ASMO" source="AS1W" timeResolution="P1M"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_AS1D" maxUniqueEntries="1825" purposeKey="AS1D" source="AS1H" timeResolution="P1D"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_AS1W" maxUniqueEntries="260" purposeKey="AS1W" source="AS1D" timeResolution="P1W"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_ASMO" maxUniqueEntries="120" purposeKey="ASMO" source="AS1W" timeResolution="P1M"/>
 				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_AS1Y" maxUniqueEntries="60" purposeKey="AS1Y" source="ASMO" timeResolution="P1Y"/>
 				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_ASTT" maxUniqueEntries="1" purposeKey="ASTT" source="AS1D" timeResolution="P10Y"/>
 				<!-- METRICS: КИУМ в базовом сценарии -->
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_workingTime_BS1H" maxUniqueEntries="87600" purposeKey="BS1H" timeResolution="PT1H"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_workingTime_BS1D" maxUniqueEntries="1825" purposeKey="BS1D" source="BS1H" timeResolution="P1D"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_workingTime_BS1W" maxUniqueEntries="260" purposeKey="BS1W" source="BS1D" timeResolution="P1W"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_workingTime_BSMO" maxUniqueEntries="120" purposeKey="BSMO" source="BS1W" timeResolution="P1M"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_BS1D" maxUniqueEntries="1825" purposeKey="BS1D" source="BS1H" timeResolution="P1D"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_BS1W" maxUniqueEntries="260" purposeKey="BS1W" source="BS1D" timeResolution="P1W"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_BSMO" maxUniqueEntries="120" purposeKey="BSMO" source="BS1W" timeResolution="P1M"/>
 				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_BS1Y" maxUniqueEntries="60" purposeKey="BS1Y" source="BSMO" timeResolution="P1Y"/>
 				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_BSTT" maxUniqueEntries="1" purposeKey="BSTT" source="BS1D" timeResolution="P10Y"/>
 				<!-- METRICS: разница в КИУМ между сценариями -->
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_workingTime_AB1H" maxUniqueEntries="87600" purposeKey="AB1H" timeResolution="PT1H"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_workingTime_AB1D" maxUniqueEntries="1825" purposeKey="AB1D" source="AB1H" timeResolution="P1D"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_workingTime_AB1W" maxUniqueEntries="260" purposeKey="AB1W" source="AB1D" timeResolution="P1W"/>
-				<m:addResource aggregateMode="mean" interpolMode="none" mRID="_PVS_01_workingTime_ABMO" maxUniqueEntries="120" purposeKey="ABMO" source="AB1W" timeResolution="P1M"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_AB1D" maxUniqueEntries="1825" purposeKey="AB1D" source="AB1H" timeResolution="P1D"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_AB1W" maxUniqueEntries="260" purposeKey="AB1W" source="AB1D" timeResolution="P1W"/>
+				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_ABMO" maxUniqueEntries="120" purposeKey="ABMO" source="AB1W" timeResolution="P1M"/>
 				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_AB1Y" maxUniqueEntries="60" purposeKey="AB1Y" source="ABMO" timeResolution="P1Y"/>
 				<m:addResource aggregateMode="mean" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_ABTT" maxUniqueEntries="1" purposeKey="ABTT" source="AB1D" timeResolution="P10Y"/>
 				<!-- METRICS: выбросы CO2 -->
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_workingTime_CO1H" maxUniqueEntries="87600" purposeKey="CO1H" timeResolution="PT1H"/>
-				<m:addResource aggregateMode="sum" interpolMode="none" mRID="_PVS_01_workingTime_CO1D" maxUniqueEntries="1825" purposeKey="CO1D" source="CO1H" timeResolution="P1D"/>
-				<m:addResource aggregateMode="sum" interpolMode="none" mRID="_PVS_01_workingTime_CO1W" maxUniqueEntries="260" purposeKey="CO1W" source="CO1D" timeResolution="P1W"/>
-				<m:addResource aggregateMode="sum" interpolMode="none" mRID="_PVS_01_workingTime_COMO" maxUniqueEntries="120" purposeKey="COMO" source="CO1W" timeResolution="P1M"/>
-				<m:addResource aggregateMode="sum" interpolMode="none" mRID="_PVS_01_workingTime_CO1Y" maxUniqueEntries="60" purposeKey="CO1Y" source="COMO" timeResolution="P1Y"/>
+				<m:addResource aggregateMode="sum" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_CO1D" maxUniqueEntries="1825" purposeKey="CO1D" source="CO1H" timeResolution="P1D"/>
+				<m:addResource aggregateMode="sum" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_CO1W" maxUniqueEntries="260" purposeKey="CO1W" source="CO1D" timeResolution="P1W"/>
+				<m:addResource aggregateMode="sum" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_COMO" maxUniqueEntries="120" purposeKey="COMO" source="CO1W" timeResolution="P1M"/>
+				<m:addResource aggregateMode="sum" earlyTelemetryAggregation="true" interpolMode="none" mRID="_PVS_01_workingTime_CO1Y" maxUniqueEntries="60" purposeKey="CO1Y" source="COMO" timeResolution="P1Y"/>
 				<m:addResource aggregateMode="cumulative" interpolMode="none" mRID="_PVS_01_workingTime_COTT" maxUniqueEntries="1" purposeKey="COTT" source="CO1D" timeResolution="P1D"/>
 				<!-- METRICS: Деревьев спасено -->
 				<m:addResource aggregateMode="last" interpolMode="none" mRID="_PVS_01_workingTime_TSTT" maxUniqueEntries="1" purposeKey="TSTT" timeResolution="P1D"/>
