@@ -45,9 +45,9 @@
 
 		<!-- Параметры системы -->
 		<!-- Перенос цены за ЭЭ из SystemValues в _EPC_01/costs/LIMIT_PRICE_ENERGY -->
-		<pseudoMeasurement target="/energyProvider[MRID='_EPC_01']/costs/addResources/addResource[purposeKey='LIMIT_PRICE_ENERGY']" telemetry="false">
+		<!-- <pseudoMeasurement target="/energyProvider[MRID='_EPC_01']/costs/addResources/addResource[purposeKey='LIMIT_PRICE_ENERGY']" telemetry="false">
 			<source backupValue="0" coeff="1" path="SystemValue:cfg.gridEnergyPrice"/>
-		</pseudoMeasurement>
+		</pseudoMeasurement> -->
 
 		<!-- Перенос значения максимального перетока из SystemValues в _EXG_01/maxPOUT/TMMM -->
 		<pseudoMeasurement target="/externalGrid[MRID='_EXG_01']/maxPOUT/addResources/addResource[purposeKey='TMMM']" telemetry="false">
@@ -827,21 +827,17 @@
 			<pluginSettings path="./subconfigs/IHTS-00.xml"/>
 		</pluginConfig>
 
-		<pluginConfig desc="Связь с нагрузкой" pluginInstance="1" pluginType="IMDB" url="default">
+		<pluginConfig desc="Связь с сетью шина 1" pluginInstance="1" pluginType="IMDB" url="default">
 			<pluginSettings path="./subconfigs/IMDB-01.xml"/>
+		</pluginConfig>
+		<pluginConfig desc="Связь с сетью шина 2" pluginInstance="2" pluginType="IMDB" url="default">
+			<pluginSettings path="./subconfigs/IMDB-02.xml"/>
 		</pluginConfig>
 		<pluginConfig desc="Связь с СЭС" pluginInstance="11" pluginType="IMDB" url="default">
 			<pluginSettings path="./subconfigs/IMDB-11.xml"/>
 		</pluginConfig>
 		<pluginConfig desc="Связь с накопителем 1 - Li-ion" pluginInstance="21" pluginType="IMDB" url="default">
 			<pluginSettings path="./subconfigs/IMDB-21.xml"/>
-		</pluginConfig>
-		<pluginConfig desc="Связь с накопителем 2 - Redox" pluginInstance="22" pluginType="IMDB" url="default">
-			<pluginSettings path="./subconfigs/IMDB-22.xml"/>
-		</pluginConfig>
-
-		<pluginConfig desc="Связь с сетью" pluginInstance="31" pluginType="IMDB" url="default">
-			<pluginSettings path="./subconfigs/IMDB-31.xml"/>
 		</pluginConfig>
 
 		<pluginConfig desc="Задержка старта оптимизатора" pluginInstance="0" pluginType="SCLK" url="default">
@@ -939,7 +935,7 @@
 				</conditions>
 			</rule>
 
-			<!-- IMDB-01 - Нагрузка ULD-01 -->
+			<!-- IMDB-01 - Сеть EXG-01 -->
 			<rule desc="Запуск IMDB-01">
 				<actions>
 					<action action="start" operName="WORK" pluginInstance="1" pluginType="IMDB"/>
@@ -948,6 +944,18 @@
 					<orOper negation="false">
 						<trigger action="success" negation="false" operName="INIT" pluginInstance="1" pluginType="IMDB"/>
 						<trigger action="fail" negation="false" operName="WORK" pluginInstance="1" pluginType="IMDB"/>
+					</orOper>
+				</conditions>
+			</rule>
+			<!-- IMDB-02 - Сеть EXG-02 -->
+			<rule desc="Запуск IMDB-02">
+				<actions>
+					<action action="start" operName="WORK" pluginInstance="2" pluginType="IMDB"/>
+				</actions>
+				<conditions>
+					<orOper negation="false">
+						<trigger action="success" negation="false" operName="INIT" pluginInstance="2" pluginType="IMDB"/>
+						<trigger action="fail" negation="false" operName="WORK" pluginInstance="2" pluginType="IMDB"/>
 					</orOper>
 				</conditions>
 			</rule>
@@ -972,30 +980,6 @@
 					<orOper negation="false">
 						<trigger action="success" negation="false" operName="INIT" pluginInstance="21" pluginType="IMDB"/>
 						<trigger action="fail" negation="false" operName="WORK" pluginInstance="21" pluginType="IMDB"/>
-					</orOper>
-				</conditions>
-			</rule>
-			<!-- IMDB-22 - СНЭ ESS-02 -->
-			<rule desc="Запуск IMDB-22">
-				<actions>
-					<action action="start" operName="WORK" pluginInstance="22" pluginType="IMDB"/>
-				</actions>
-				<conditions>
-					<orOper negation="false">
-						<trigger action="success" negation="false" operName="INIT" pluginInstance="22" pluginType="IMDB"/>
-						<trigger action="fail" negation="false" operName="WORK" pluginInstance="22" pluginType="IMDB"/>
-					</orOper>
-				</conditions>
-			</rule>
-			<!-- IMDB-31 - СЭС EXG-01 -->
-			<rule desc="Запуск IMDB-31">
-				<actions>
-					<action action="start" operName="WORK" pluginInstance="31" pluginType="IMDB"/>
-				</actions>
-				<conditions>
-					<orOper negation="false">
-						<trigger action="success" negation="false" operName="INIT" pluginInstance="31" pluginType="IMDB"/>
-						<trigger action="fail" negation="false" operName="WORK" pluginInstance="31" pluginType="IMDB"/>
 					</orOper>
 				</conditions>
 			</rule>
