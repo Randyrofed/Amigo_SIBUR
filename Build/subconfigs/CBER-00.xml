@@ -1,0 +1,20 @@
+<pluginSettings>
+	<!-- Максимально допустимый переток мощности в сеть, по умолчанию 0 -->
+	<maxPowerExport>0.0</maxPowerExport>
+	<!-- Порог изменения уставки для её передачи, по умолчанию 0.1 -->
+	<setValueThreshold>0</setValueThreshold>
+	<!-- Шаг дискретизации расчета при выдаче уставок, по умолчанию PT1S -->
+	<telemetryResolution>PT1S</telemetryResolution>
+	<!-- purposeKey с телеметрией оборудования, по умолчанию TMMM -->
+	<telemetryPurposeKey>TMMM</telemetryPurposeKey>
+	<!-- purposeKey статуса оборудования в соответствующих Telpoint, по умолчанию TMMM -->
+	<statusPurposeKey>TMMM</statusPurposeKey>
+	<!-- purposeKey стратегии управления, обязательный параметр -->
+	<strategyPurposeKey>PRIO</strategyPurposeKey>
+	<!-- Частота выдачи уставок, по умолчанию PT1S -->
+	<governPeriod>PT5S</governPeriod>
+	<!-- Оборудование, формирование списков включенного в управление или исключенного из оного (или-или). Входят только генераторы, накопители и потребители -->
+	<!-- <includeEquipment>_ESS_01</includeEquipment> -->
+	<!-- <includeEquipment>_ESS_02</includeEquipment> -->
+	<!-- <excludeEquipment></excludeEquipment> -->
+</pluginSettings>
