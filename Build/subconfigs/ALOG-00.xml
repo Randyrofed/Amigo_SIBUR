@@ -1,0 +1,4 @@
+<pluginSettings>
+	<logTableName>module_journal</logTableName>
+	<logProcessor>ru.rtsoft.amigo.alog.loggers.BaseEventSubscriber</logProcessor>
+</pluginSettings>
