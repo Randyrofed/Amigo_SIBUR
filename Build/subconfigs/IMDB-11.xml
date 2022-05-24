@@ -1,0 +1,14 @@
+<pluginSettings>
+	<allRestart>PT10S</allRestart>
+	<!-- Солнечная электростанция PVS 01, шина BUS 01, IP: 127.0.0.1:1502 -->
+	<!-- Тэг connectionHistory необходимо изменить, т.к. фактически выполняется опрос одного устройства (АСУТП). При этом в АСУТП есть регистр, отвечающий за статус связи с реальным регистром -->
+	<device consequentOnly="false" ip="127.0.0.1" maxDataVolume="32" packRequests="true" pollingCycle="PT1S" port="1502" restartPeriod="PT5S">
+		<connectionHistory>/generatingUnit[MRID='_PVS_01']/connection/addResources/addResource[purposeKey='TMMM']</connectionHistory>
+		<unit sequential="true" unitId="3" >
+			<readFrom address="30032" byteOrder="WordSwapped" dataType="Integer" expectedMax="60000" expectedMin="0" path="/generatingUnit[MRID='_PVS_01']/p/addResources/addResource[purposeKey='TMMM']" readType="HoldingRegister" scaleFactor="0.001"/>
+
+			<!-- Уставка активной мощности -->
+			<writeTo address="40032" dataType="Integer" path="/generatingUnit[MRID='_PVS_01']/p" scaleFactor="1000" writeType="MultipleRegister"/>
+		</unit>
+	</device>
+</pluginSettings>
