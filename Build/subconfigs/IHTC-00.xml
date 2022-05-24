@@ -1,0 +1,25 @@
+<!-- Запрос оптимизации -->
+<pluginSettings>
+	<connection operationName="CLOM">
+		<http connectingTimeout="PT2M" method="POST">
+			<url>https://gao-dev.rnd.rtsoft.ru/one_bus_optimization/</url>
+		</http>
+		<processingClass>ru.rtsoft.amigo.cloud_optimizer.CloudOptimizerPlugin</processingClass>
+		<customConfig>
+			<includes all="true"/>
+			<limitation>Power balance</limitation>
+			<currentTime>now</currentTime>
+			<workPeriod>PT23H</workPeriod>
+			<timeStep>PT5M</timeStep>
+			<resultLength>PT23H</resultLength>
+			<param name="gap" value="0.01"/>
+			<param name="maxtime" value="45"/>
+			<param name="return_acc_priorities" value="1"/>
+			<switchingDisabledLower>5</switchingDisabledLower>
+			<forecastPurposeKey>FL05</forecastPurposeKey>
+			<externalGridAsSimpleGenerators>_EXG_01</externalGridAsSimpleGenerators>
+			<solarGeneratorWithPrice>_PVS_01</solarGeneratorWithPrice>
+			<accumPriorityPurposeKey>PRIO</accumPriorityPurposeKey>
+		</customConfig>
+	</connection>
+</pluginSettings>
